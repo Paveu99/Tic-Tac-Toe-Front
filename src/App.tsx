@@ -2,15 +2,10 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-import {ExpenseEntity} from 'types'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
-    const example: ExpenseEntity = {
-        cost: 12,
-
-    }
   return (
     <>
       <div>
