@@ -2,6 +2,10 @@ import { useState } from 'react'
 import './App.scss'
 import {Header} from "./components/header/Header.tsx";
 import el from '../src/components/styles/images/Menu.png';
+import {Route, Routes} from "react-router-dom";
+import { HomePage } from './views/HomePage.tsx';
+import {GamePage} from "./views/GamePage.tsx";
+import {LeaderboardPage} from "./views/LeaderboardPage.tsx";
 function App() {
 
     const [isNavbarHidden, setIsNavbarHidden] = useState<boolean>(true);
@@ -18,8 +22,12 @@ function App() {
           <div className={`navbar ${isNavbarHidden ? 'hidden' : ''}`}>
               <Header/>
           </div>
-          <div className={`content ${!isNavbarHidden ? 'hidden' : ''}`}>
-              <p>ansdlkajnsdlksasdlfka;sdfja[osdijfpaosidjfaosidjfaosidjf;aosdf;alsjkdnf;alsjkdnfa;sldjkfn;ljan</p>
+          <div className={`content ${!isNavbarHidden ? 'hidden' : ''}`} onClick={() => setIsNavbarHidden(true)}>
+              <Routes>
+                  <Route path="/" element={<HomePage/>}/>
+                  <Route path="/game" element={<GamePage/>}/>
+                  <Route path="/details" element={<LeaderboardPage/>}/>
+              </Routes>
           </div>
       </div>
   )
