@@ -12,7 +12,7 @@ export const Header = () => {
     ) => (
         {
             color: isActive ? "#ffffff" : '',
-            backgroundColor: isActive ? "#323232" : '',
+            backgroundColor: isActive ? "rgba(138, 22, 22, 0.8)" : '',
         }
     )
 
@@ -22,7 +22,7 @@ export const Header = () => {
           <img className="small-icon" src={el1} alt=""/>
           <p className="text">MAIN</p>
       </NavLink>
-      <NavLink className="nav__link" style={styleOfLink} to="/info">
+      <NavLink className="nav__link" style={styleOfLink} to="/game">
           <img className="small-icon" src={el2} alt=""/>
           <p className="text">GAME</p>
       </NavLink>
