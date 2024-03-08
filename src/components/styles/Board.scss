@@ -1,0 +1,18 @@
+.background {
+  height: 70vh;
+  width: 70vh;
+  background-color: white;
+  display: grid;
+  grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+  grid-gap: 15px;
+  //padding: 20px;
+}
+
+.single_element {
+  background-color: rgba(138, 22, 22, 1);
+}
+
+.clicked {
+  background-image: url('../styles/images/O.png');
+  background-size: cover;
+}
