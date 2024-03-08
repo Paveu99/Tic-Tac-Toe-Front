@@ -1,3 +1,8 @@
+import '../components/styles/GameView.scss'
+import {Board} from "../components/board/Board.tsx";
+
 export const GamePage = () => {
-    return <div style={{textAlign: "center"}}>GAME PAGE</div>
+    return <div className="page_view">
+        <Board/>
+    </div>
 }
