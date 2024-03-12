@@ -35,7 +35,7 @@ export const Board = () => {
             {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((index) => (
                 <div
                     key={index}
-                    className={`single_element ${clickedIndexes.includes(index) ? 'clicked' : ''}`}
+                    className='single_element'
                     onClick={() => handleClick(index)}
                     style={{ ...clickedStyle, backgroundImage: `url(${currentImg[index - 1]})` }}
                 ></div>
