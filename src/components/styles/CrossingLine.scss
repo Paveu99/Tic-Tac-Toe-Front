@@ -1,0 +1,11 @@
+.animated-line-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.animated-line-svg {
+  width: 70vh; /* Dostosuj szerokość linii SVG według potrzeb */
+  height: 70vh; /* Dostosuj wysokość linii SVG według potrzeb */
+}
