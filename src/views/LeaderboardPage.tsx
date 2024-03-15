@@ -1,3 +1,5 @@
+import {CrossingLine} from "../components/CrossingLine/CrossingLine.tsx";
+
 export const LeaderboardPage = () => {
-    return <div style={{textAlign: "center"}}>LEADERBOARD PAGE</div>
+    return <CrossingLine/>
 }
