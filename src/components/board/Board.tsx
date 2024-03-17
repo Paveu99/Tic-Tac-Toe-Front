@@ -12,27 +12,63 @@ export const Board = () => {
     const [isEl1Turn, setIsEl1Turn] = useState<boolean>(true);
     const [isBoardDisabled, setIsBoardDisabled] = useState<boolean>(false);
     const [winner, setWinner] = useState<string>('');
-    const [xPosition, setXPosition] = useState<string>('');
-    const [yPosition, setYPosition] = useState<string>('');
-    const [angle, setAngle] = useState<string>('');
+    const [xPosition, setXPosition] = useState<number | null>(0);
+    const [yPosition, setYPosition] = useState<number | null>(0);
+    const [angle, setAngle] = useState<number | null>(0);
     const [thickness, setThickness] = useState<string>('');
+
     function checkWinner(board: number[]) {
         const winningCombos = [
-            [1, 2, 3], [4, 5, 6], [7, 8, 9],
-            [1, 4, 7], [2, 5, 8], [3, 6, 9],
-            [1, 5, 9], [3, 5, 7]
+            {id: 1, combo: [1, 2, 3], coordinateX: getXPosition(2), coordinateY: getYPosition(2), angle: 0},
+            {id: 2, combo: [4, 5, 6], coordinateX: getXPosition(5), coordinateY: getYPosition(5), angle: 0},
+            {id: 3, combo: [7, 8, 9], coordinateX: getXPosition(8), coordinateY: getYPosition(8), angle: 0},
+            {id: 4, combo: [1, 4, 7], coordinateX: getXPosition(4), coordinateY: getYPosition(4), angle: 90},
+            {id: 5, combo: [2, 5, 8], coordinateX: getXPosition(5), coordinateY: getYPosition(5), angle: 90},
+            {id: 6, combo: [3, 6, 9], coordinateX: getXPosition(6), coordinateY: getYPosition(6), angle: 90},
+            {id: 7, combo: [1, 5, 9], coordinateX: getXPosition(5), coordinateY: getYPosition(5), angle: 135},
+            {id: 8, combo: [3, 5, 7], coordinateX: getXPosition(5), coordinateY: getYPosition(5), angle: 45},
         ];
 
         // Sprawdzenie, czy któryś z zestawów indeksów jest częścią zwycięskiej kombinacji
         for (const combo of winningCombos) {
-            const [a, b, c] = combo;
+            const [a, b, c] = combo.combo;
             if (board.includes(a) && board.includes(b) && board.includes(c)) {
-                console.log("Wygrana")
+                setXPosition(combo.coordinateX);
+                setYPosition(combo.coordinateY);
+                setAngle(combo.angle);
+                console.log("Wygrana tym: ", combo)
+                console.log("Coordinates: ", combo.coordinateX, combo.coordinateY, combo.angle)
                 return true;
             }
         }
 
         return false;
+    }
+
+    function getXPosition(index: number): number | null {
+        const element = document.querySelector(`.single_element:nth-child(${index})`) as HTMLElement;
+
+        if (element) {
+            const rectElement = element.getBoundingClientRect();
+
+            return rectElement.left + rectElement.width / 2;
+
+        } else {
+            return null
+        }
+    }
+
+    function getYPosition(index: number): number | null {
+        const element = document.querySelector(`.single_element:nth-child(${index})`) as HTMLElement;
+
+        if (element) {
+            const rectElement = element.getBoundingClientRect();
+
+            return rectElement.top + rectElement.height / 2;
+
+        } else {
+            return null
+        }
     }
 
     const handleClick = (index: number) => {
