@@ -1,7 +1,8 @@
 import '../styles/Board.scss';
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import el2 from '../styles/images/O.png';
 import el1 from '../styles/images/X.png';
+import {CrossingLine} from "../CrossingLine/CrossingLine.tsx";
 
 export const Board = () => {
     const initialImgState = Array(9).fill('');
@@ -126,7 +127,7 @@ export const Board = () => {
         console.log(isEl1Turn);
         console.log(clickedIndexesForO);
         console.log(clickedIndexesForX);
-        console.log(winner)
+        console.log(winner);
     }, [currentImg]);
 
 
