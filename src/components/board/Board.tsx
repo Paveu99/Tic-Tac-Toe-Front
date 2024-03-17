@@ -129,6 +129,8 @@ export const Board = () => {
         console.log(winner)
     }, [currentImg]);
 
+
+
     return (
         <div>
             <div className="background">
@@ -140,6 +142,7 @@ export const Board = () => {
                         style={{ ...clickedStyle, backgroundImage: `url(${currentImg[index - 1]})` }}
                     ></div>
                 ))}
+                {winner && <CrossingLine angle={angle} xPosition={xPosition} yPosition={yPosition}/>}
             </div>
             <button onClick={handleReset}>Reset</button>
         </div>
