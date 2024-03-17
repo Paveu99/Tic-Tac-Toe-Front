@@ -77,33 +77,29 @@ export const Board = () => {
             newCurrentImg[index - 1] = isEl1Turn ? el1 : el2;
             setCurrentImg(newCurrentImg);
 
-            // Aktualizacja klikniętych indeksów
             const updatedClickedIndexes = [...clickedIndexes, index];
             setClickedIndexes(updatedClickedIndexes);
 
-            // Sprawdzenie zwycięstwa
             if(isEl1Turn) {
                 if(checkWinner([...clickedIndexesForX, index])) {
                     setIsBoardDisabled(true);
                     setWinner('X');
+                    return;
                 }
-                checkWinner([...clickedIndexesForX, index]);
             } else {
                 if(checkWinner([...clickedIndexesForO, index])) {
                     setIsBoardDisabled(true);
                     setWinner('O');
+                    return;
                 }
-                checkWinner([...clickedIndexesForO, index]);
             }
 
-            // Aktualizacja indeksów dla X i O
             if(isEl1Turn) {
-                setClickedIndexesForX([...clickedIndexesForX, index]);
+                setClickedIndexesForX([...clickedIndexesForX, index].sort());
             } else {
-                setClickedIndexesForO([...clickedIndexesForO, index]);
+                setClickedIndexesForO([...clickedIndexesForO, index].sort());
             }
 
-            // Zmiana tury
             setIsEl1Turn(!isEl1Turn);
         }
     };
