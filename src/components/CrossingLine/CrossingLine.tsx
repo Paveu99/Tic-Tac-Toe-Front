@@ -1,5 +1,5 @@
 import '../styles/CrossingLine.scss';
-import {useEffect, useRef} from "react";
+import {useEffect, useRef, useState} from "react";
 
 interface Props {
     angle: string | number | undefined;
@@ -12,6 +12,10 @@ export const CrossingLine = (props: Props) => {
     const lineRefLeft = useRef(null);
     const lineRefVertical = useRef(null);
     const lineRefHorizontal = useRef(null);
+    const [x1, setX1] = useState<string | number | undefined>(`${props.xPosition}px`);
+    const [x2, setX2] = useState<string | number | undefined>(`${props.xPosition}px`);
+    const [y1, setY1] = useState<string | number | undefined>(`${props.yPosition}px`);
+    const [y2, setY2] = useState<string | number | undefined>(`${props.yPosition}px`);
 
     useEffect(() => {
         if (props.angle === 45) {
@@ -43,7 +47,6 @@ export const CrossingLine = (props: Props) => {
             animation1__horizontal.beginElement();
             animation2__horizontal.beginElement();
         }
-
     }, [props.angle]);
 
     const rightLine = <svg className="animated-line-svg">
@@ -151,9 +154,9 @@ export const CrossingLine = (props: Props) => {
     const verticalLine = <svg className="animated-line-svg">
         <line
             ref={lineRefVertical}
-            x1="50%"
+            x1={x1}
             y1="50%"
-            x2="50%"
+            x2={x2}
             y2="50%"
             stroke="black"
             strokeWidth="10"
@@ -185,9 +188,9 @@ export const CrossingLine = (props: Props) => {
         <line
             ref={lineRefHorizontal}
             x1="50%"
-            y1="33%"
+            y1={y1}
             x2="50%"
-            y2="33%"
+            y2={y2}
             stroke="black"
             strokeWidth="10"
             strokeLinecap="round"
