@@ -13,10 +13,9 @@ export const Board = () => {
     const [isEl1Turn, setIsEl1Turn] = useState<boolean>(true);
     const [isBoardDisabled, setIsBoardDisabled] = useState<boolean>(false);
     const [winner, setWinner] = useState<string>('');
-    const [xPosition, setXPosition] = useState<number | null>(0);
-    const [yPosition, setYPosition] = useState<number | null>(0);
-    const [angle, setAngle] = useState<number | null>(0);
-    const [thickness, setThickness] = useState<string>('');
+    const [xPosition, setXPosition] = useState<string | number | undefined>(0);
+    const [yPosition, setYPosition] = useState<string | number | undefined>(0);
+    const [angle, setAngle] = useState<string | number | undefined>(0);
 
     function checkWinner(board: number[]) {
         const winningCombos = [
