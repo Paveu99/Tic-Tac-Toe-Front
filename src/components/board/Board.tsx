@@ -46,29 +46,45 @@ export const Board = () => {
         return false;
     }
 
-    function getXPosition(index: number): number | null {
+    function getXPosition(index: number, column: number): string | number | undefined {
         const element = document.querySelector(`.single_element:nth-child(${index})`) as HTMLElement;
+        const backgroundElement = document.querySelector('.background') as HTMLElement;
 
-        if (element) {
+        if (element && backgroundElement) {
             const rectElement = element.getBoundingClientRect();
+            const rectBackground = backgroundElement.getBoundingClientRect();
 
-            return rectElement.left + rectElement.width / 2;
+            if (column === 1) {
+                return rectElement.width / 2;
+            } else if (column === 2) {
+                return rectBackground.width / 2;
+            } else {
+                return ((rectBackground.width) - (rectElement.width / 2));
+            }
 
         } else {
-            return null
+            return undefined
         }
     }
 
-    function getYPosition(index: number): number | null {
+    function getYPosition(index: number, row: number): string | number | undefined {
         const element = document.querySelector(`.single_element:nth-child(${index})`) as HTMLElement;
+        const backgroundElement = document.querySelector('.background') as HTMLElement;
 
-        if (element) {
+        if (element && backgroundElement) {
             const rectElement = element.getBoundingClientRect();
+            const rectBackground = backgroundElement.getBoundingClientRect();
 
-            return rectElement.top + rectElement.height / 2;
+            if (row === 1) {
+                return rectElement.height / 2;
+            } else if (row === 2) {
+                return rectBackground.height / 2;
+            } else {
+                return ((rectBackground.height) - (rectElement.height / 2));
+            }
 
         } else {
-            return null
+            return undefined
         }
     }
 
