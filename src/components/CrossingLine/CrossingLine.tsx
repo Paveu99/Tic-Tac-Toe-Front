@@ -2,9 +2,9 @@ import '../styles/CrossingLine.scss';
 import {useEffect, useRef} from "react";
 
 interface Props {
-    angle: number | null;
-    xPosition: number | null;
-    yPosition: number | null;
+    angle: string | number | undefined;
+    xPosition: string | number | undefined;
+    yPosition: string | number | undefined;
 }
 
 export const CrossingLine = (props: Props) => {
