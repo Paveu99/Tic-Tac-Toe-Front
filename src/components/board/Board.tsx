@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import el2 from '../styles/images/O.png';
 import el1 from '../styles/images/X.png';
 import {CrossingLine} from "../CrossingLine/CrossingLine.tsx";
+import {UnderBoardBttn} from "../buttons/UnderBoardBttn.tsx";
 
 export const Board = () => {
     const initialImgState = Array(9).fill('');
@@ -147,7 +148,7 @@ export const Board = () => {
 
 
     return (
-        <div>
+        <div style={{marginTop: "40px"}}>
             <div className="background">
                 {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((index) => (
                     <div
@@ -159,7 +160,10 @@ export const Board = () => {
                 ))}
                 {winner && <CrossingLine angle={angle} xPosition={xPosition} yPosition={yPosition}/>}
             </div>
-            <button onClick={handleReset}>Reset</button>
+            <div className="board-buttons">
+                <UnderBoardBttn text="RESET" onClick={handleReset}/>
+                <UnderBoardBttn text="UNDO" onClick={handleReset}/>
+            </div>
         </div>
     );
 };
