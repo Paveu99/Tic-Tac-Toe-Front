@@ -20,17 +20,16 @@ export const Board = () => {
 
     function checkWinner(board: number[]) {
         const winningCombos = [
-            {id: 1, combo: [1, 2, 3], coordinateX: getXPosition(2), coordinateY: getYPosition(2), angle: 0},
-            {id: 2, combo: [4, 5, 6], coordinateX: getXPosition(5), coordinateY: getYPosition(5), angle: 0},
-            {id: 3, combo: [7, 8, 9], coordinateX: getXPosition(8), coordinateY: getYPosition(8), angle: 0},
-            {id: 4, combo: [1, 4, 7], coordinateX: getXPosition(4), coordinateY: getYPosition(4), angle: 90},
-            {id: 5, combo: [2, 5, 8], coordinateX: getXPosition(5), coordinateY: getYPosition(5), angle: 90},
-            {id: 6, combo: [3, 6, 9], coordinateX: getXPosition(6), coordinateY: getYPosition(6), angle: 90},
-            {id: 7, combo: [1, 5, 9], coordinateX: getXPosition(5), coordinateY: getYPosition(5), angle: 135},
-            {id: 8, combo: [3, 5, 7], coordinateX: getXPosition(5), coordinateY: getYPosition(5), angle: 45},
+            {id: 1, combo: [1, 2, 3], coordinateX: getXPosition(2, 2), coordinateY: getYPosition(2, 1), angle: 0},
+            {id: 2, combo: [4, 5, 6], coordinateX: getXPosition(5, 2), coordinateY: getYPosition(5, 2), angle: 0},
+            {id: 3, combo: [7, 8, 9], coordinateX: getXPosition(8, 2), coordinateY: getYPosition(8, 3), angle: 0},
+            {id: 4, combo: [1, 4, 7], coordinateX: getXPosition(4, 1), coordinateY: getYPosition(4, 2), angle: 90},
+            {id: 5, combo: [2, 5, 8], coordinateX: getXPosition(5, 2), coordinateY: getYPosition(5, 2), angle: 90},
+            {id: 6, combo: [3, 6, 9], coordinateX: getXPosition(6, 3), coordinateY: getYPosition(6, 2), angle: 90},
+            {id: 7, combo: [1, 5, 9], coordinateX: getXPosition(5, 2), coordinateY: getYPosition(5, 2), angle: 135},
+            {id: 8, combo: [3, 5, 7], coordinateX: getXPosition(5, 2), coordinateY: getYPosition(5, 2), angle: 45},
         ];
 
-        // Sprawdzenie, czy któryś z zestawów indeksów jest częścią zwycięskiej kombinacji
         for (const combo of winningCombos) {
             const [a, b, c] = combo.combo;
             if (board.includes(a) && board.includes(b) && board.includes(c)) {
