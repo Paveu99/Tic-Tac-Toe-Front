@@ -1,0 +1,15 @@
+.underboard-button {
+  display: flex;
+  flex-direction: row;
+  color: black;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  padding: 10px 30px 10px 30px;
+  border: none;
+  border-radius: 10px;
+  &:hover {
+    background-color: #333;
+    cursor: pointer;
+  }
+}
