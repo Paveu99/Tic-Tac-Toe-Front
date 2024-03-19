@@ -16,7 +16,7 @@ export const Header = () => {
         }
     )
 
-  return <header className='nav'>
+  return <nav className='nav'>
       <p className="title">TIC TAC TOE <img src={el4} alt="" className="big-icon"/></p>
       <NavLink className="nav__link" style={styleOfLink} to="/">
           <img className="small-icon" src={el1} alt=""/>
@@ -30,5 +30,5 @@ export const Header = () => {
           <img className="small-icon" src={el3} alt=""/>
           <p className="text">LEADERBOARD</p>
       </NavLink>
-      </header>
+      </nav>
 }
