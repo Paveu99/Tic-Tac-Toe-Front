@@ -1,13 +1,36 @@
 import '../components/styles/GameView.scss'
 import {Board} from "../components/board/Board.tsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {GameStartModal} from "../components/modals/GameStartModal.tsx";
 import {UnderBoardBttn} from "../components/buttons/UnderBoardBttn.tsx";
+import el1 from "../components/styles/images/Number1.png";
+import el2 from "../components/styles/images/Number2.png";
+
+interface Players {
+    playerX: string,
+    playerO: string
+}
 
 export const GamePage = () => {
 
     const [openModal, setOpenModal] = useState<boolean>(false);
     const [inputDataCorrect, setInputDataCorrect] = useState<boolean>(false);
+    const [players, setPlayers] = useState<Players>({
+        playerX: '',
+        playerO: '',
+    });
+    const handleInput = (starter: string, seconder: string, inputData: boolean) => {
+        setPlayers({playerX: starter, playerO: seconder});
+        setTimeout(() => {
+            setOpenModal(false);
+            setInputDataCorrect(inputData);
+        }, 500);
+    }
+
+    useEffect(() => {
+        console.log(players);
+        console.log(inputDataCorrect);
+    }, [inputDataCorrect, players, setPlayers]);
 
     return <div className="page_view">
         {!inputDataCorrect &&
@@ -22,7 +45,7 @@ export const GamePage = () => {
                 <UnderBoardBttn onClick={() => setOpenModal(true)} text="START NEW GAME"/>
             </div>
         }
-        <GameStartModal isOpen={openModal} onClose={() => setOpenModal(false)}/>
-        {inputDataCorrect && <Board/>}
+        <GameStartModal isOpen={openModal} onClose={() => setOpenModal(false)} setPlayers={handleInput}/>
+        {inputDataCorrect && <Board playerX={players.playerX} playerY={players.playerX}/>}
     </div>
 }
