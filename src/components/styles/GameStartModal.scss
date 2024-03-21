@@ -18,6 +18,7 @@
 .react-modal-content {
   display: block;
   height: 70vh;
+  min-height: 400px;
   text-align: left;
   position: relative;
   background-color: #171717;
@@ -129,4 +130,58 @@
 }
 .close:after {
   transform: rotate(-45deg);
+}
+
+.label {
+  display: flex;
+  width: 300px;
+  align-items: center;
+  margin: 20px 0 5px 0;
+}
+
+.desc-icon {
+  height: 1.3rem;
+  margin-right: 5px;
+}
+
+.input:hover {
+  outline: none;
+  background-color: #777777;
+  caret-color: transparent;
+}
+
+.input:focus {
+  outline: none;
+  background-color: #777777;
+  caret-color: transparent;
+}
+
+.check {
+  display: flex;
+  align-items: center;
+  &__icon {
+    height: 1.3rem;
+    margin-top: 3px;
+    margin-left: 10px;
+  }
+}
+
+.start-form {
+  &__name {
+    padding-left: 10px;
+    width: 240px;
+    height: 30px;
+    font-size: 15px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: none;
+    background-color: #3a3a3a;
+    color: white;
+  }
+  &__name::placeholder {
+    color: white;
+  }
+  &__name:focus::placeholder {
+    color: transparent;
+  }
 }
