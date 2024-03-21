@@ -5,7 +5,12 @@ import el1 from '../styles/images/X.png';
 import {CrossingLine} from "../CrossingLine/CrossingLine.tsx";
 import {UnderBoardBttn} from "../buttons/UnderBoardBttn.tsx";
 
-export const Board = () => {
+interface Props {
+    playerX: string,
+    playerY: string
+}
+
+export const Board = (props: Props) => {
     const initialImgState = Array(9).fill('');
     const [currentImg, setCurrentImg] = useState<string[]>(initialImgState);
     const [clickedIndexes, setClickedIndexes] = useState<number[]>([]);
