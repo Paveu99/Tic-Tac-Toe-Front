@@ -6,3 +6,10 @@
   width: 70vh;
   height: 70vh;
 }
+
+@media screen and (max-width: 576px) {
+  .animated-line-svg {
+    height: 95vw;
+    width: 95vw;
+  }
+}
