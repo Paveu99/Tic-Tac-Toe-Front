@@ -7,7 +7,7 @@ import {UnderBoardBttn} from "../buttons/UnderBoardBttn.tsx";
 
 interface Props {
     playerX: string,
-    playerY: string
+    playerO: string
 }
 
 export const Board = (props: Props) => {
@@ -41,8 +41,6 @@ export const Board = (props: Props) => {
                 setXPosition(combo.coordinateX);
                 setYPosition(combo.coordinateY);
                 setAngle(combo.angle);
-                console.log("Wygrana tym: ", combo)
-                console.log("Coordinates: ", combo.coordinateX, combo.coordinateY, combo.angle)
                 return true;
             }
         }
@@ -148,12 +146,14 @@ export const Board = (props: Props) => {
         console.log(clickedIndexesForO);
         console.log(clickedIndexesForX);
         console.log(winner);
+        console.log(props.playerX);
+        console.log(props.playerO);
     }, [currentImg]);
 
 
 
     return (
-        <div style={{marginTop: "40px"}}>
+        <div style={{marginTop: "10 vh"}}>
             <div className="background">
                 {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((index) => (
                     <div
