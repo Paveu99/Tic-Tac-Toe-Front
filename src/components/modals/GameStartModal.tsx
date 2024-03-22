@@ -1,12 +1,14 @@
 import {animated, useSpring, useTransition} from "@react-spring/web";
-import {FormEvent, useEffect, useState} from "react";
+import { useEffect, useState} from "react";
 import "../styles/GameStartModal.scss"
 import {CoinFlip} from "../coin/CoinFlip.tsx";
 import el1 from "../styles/images/Number1.png";
 import el2 from "../styles/images/Number2.png";
 import el3 from "../styles/images/Check.png";
+import el4 from "../styles/images/Wrong.png";
 import { motion } from "framer-motion";
 import {UnderBoardBttn} from "../buttons/UnderBoardBttn.tsx";
+import {Counter} from "../counter/Counter.tsx";
 interface Props {
     isOpen: boolean,
     onClose: () => void,
@@ -27,17 +29,15 @@ export const GameStartModal = (props: Props) => {
     const [correctPLayer1Name, setCorrectPLayer1Name] = useState<boolean>(false);
     const [correctPLayer2Name, setCorrectPLayer2Name] = useState<boolean>(false);
     const [dataCorrect, setDataCorrect] = useState<boolean>(false);
-    const [resultFromCoinFlip, setResultFromCoinFlip] = useState<string>('');
+    const [starterFromCoinFlip, setStarterFromCoinFlip] = useState<string>('');
+    const [secondFromCoinFlip, setSecondFromCoinFlip] = useState<string>('');
     const [buttonClicked, setButtonClicked] = useState<boolean>(false);
+    const [p1NumOfChar, setP1NumOfChar] = useState<number>(0);
+    const [p2NumOfChar, setP2NumOfChar] = useState<number>(0);
 
     const handleEscape = (e: any) => {
         if (e.keyCode === 27) {
-            setPlayers({ player1: '', player2: '' });
-            setCorrectPLayer1Name(false);
-            setCorrectPLayer2Name(false);
-            setDataCorrect(false);
-            setResultFromCoinFlip('');
-            props.onClose();
+            handleClose();
         }
     }
 
@@ -46,7 +46,10 @@ export const GameStartModal = (props: Props) => {
         setCorrectPLayer1Name(false);
         setCorrectPLayer2Name(false);
         setDataCorrect(false);
-        setResultFromCoinFlip('');
+        setStarterFromCoinFlip('');
+        setSecondFromCoinFlip('');
+        setP1NumOfChar(0);
+        setP2NumOfChar(0);
         props.onClose();
     }
 
@@ -59,23 +62,20 @@ export const GameStartModal = (props: Props) => {
 
         if (key === 'player1') {
             setCorrectPLayer1Name(value.length > 0);
+            setP1NumOfChar(value.length);
         }
         if (key === 'player2') {
             setCorrectPLayer2Name(value.length > 0);
+            setP2NumOfChar(value.length);
         }
     };
 
     const handleButtonClick = () => {
         if (!buttonClicked) {
-            props.setPlayers(resultFromCoinFlip, players.player2, dataCorrect);
+            props.setPlayers(starterFromCoinFlip, secondFromCoinFlip, dataCorrect);
             setButtonClicked(true);
         }
     };
-
-    const checkInput = (e: FormEvent) => {
-        e.preventDefault();
-        console.log('Test')
-    }
 
     const resetPlayersNames = () => {
         setPlayers({
@@ -86,8 +86,9 @@ export const GameStartModal = (props: Props) => {
         setCorrectPLayer2Name(false);
     }
 
-    const handleResultChange = (result: string) => {
-        setResultFromCoinFlip(result);
+    const handleResultChange = (starter: string, second: string) => {
+        setStarterFromCoinFlip(starter);
+        setSecondFromCoinFlip(second);
     };
 
     const variantsLeft = {
@@ -119,13 +120,29 @@ export const GameStartModal = (props: Props) => {
     });
 
     useEffect(() => {
+        if (players.player1 === players.player2) {
+            setCorrectPLayer1Name(false);
+            setCorrectPLayer2Name(false);
+        } else {
+            setCorrectPLayer1Name(true);
+            setCorrectPLayer2Name(true);
+        }
+
+        if (players.player1.length === 0) {
+            setCorrectPLayer1Name(false);
+        }
+
+        if (players.player2.length === 0) {
+            setCorrectPLayer2Name(false);
+        }
+
         if (correctPLayer1Name && correctPLayer2Name) {
             setDataCorrect(true);
         } else {
             setDataCorrect(false);
         }
-        console.log(resultFromCoinFlip)
-    }, [correctPLayer1Name, correctPLayer2Name, resetPlayersNames]);
+        console.log(starterFromCoinFlip)
+    }, [correctPLayer1Name, correctPLayer2Name, players.player1, players.player2, resetPlayersNames, starterFromCoinFlip]);
 
     return modalTransition((_styles, isOpen) => isOpen && (
         <animated.div className='react-modal-overlay' onClick={handleClose}>
@@ -150,7 +167,7 @@ export const GameStartModal = (props: Props) => {
                         <a href='#' className="close" onClick={handleClose}></a>
                     </header>
                     <hr/>
-                    <form autoComplete="off" className="start-form" onSubmit={checkInput}>
+                    <form autoComplete="off" className="start-form">
                         <div>
                             <div className="label" style={{color: "white"}}>
                                 <img className="desc-icon" src={el1} alt=""/>
@@ -164,17 +181,29 @@ export const GameStartModal = (props: Props) => {
                                     className="start-form__name input"
                                     value={players.player1}
                                     onChange={e => handleChange('player1', e.target.value)}
+                                    maxLength={20}
                                 />
+                                <Counter numOfChars={p1NumOfChar}/>
                                 {
-                                    correctPLayer1Name &&
-                                    <motion.div
-                                        initial="hidden"
-                                        animate="visible"
-                                        variants={variantsLeft}
-                                        transition={{duration: 0.8}}
-                                    >
-                                        <img src={el3} className="check__icon" alt=""/>
-                                    </motion.div>
+                                    correctPLayer1Name ?
+                                        <motion.div
+                                            initial="hidden"
+                                            animate="visible"
+                                            variants={variantsLeft}
+                                            transition={{duration: 0.8}}
+                                            style={{display: "flex", justifyContent: "center"}}
+                                        >
+                                            <img src={el3} className="check__icon" alt=""/>
+                                        </motion.div> :
+                                        <motion.div
+                                            initial="hidden"
+                                            animate="visible"
+                                            variants={variantsLeft}
+                                            transition={{duration: 0.8}}
+                                            style={{display: "flex", justifyContent: "center"}}
+                                        >
+                                            <img src={el4} className="check__icon" alt=""/>
+                                        </motion.div>
                                 }
                             </div>
                         </div>
@@ -185,30 +214,41 @@ export const GameStartModal = (props: Props) => {
                             </div>
                             <div className="check">
                                 <input
-                                    placeholder="Add first second name"
+                                    placeholder="Add second player name"
                                     type="text"
                                     name="player2"
                                     className="start-form__name input"
                                     value={players.player2}
                                     onChange={e => handleChange('player2', e.target.value)}
+                                    maxLength={20}
                                 />
+                                <Counter numOfChars={p2NumOfChar}/>
                                 {
-                                    correctPLayer2Name &&
-                                    <motion.div
-                                        initial="hidden"
-                                        animate="visible"
-                                        variants={variantsLeft}
-                                        transition={{duration: 0.8}}
-                                    >
-                                        <img src={el3} className="check__icon" alt=""/>
-                                    </motion.div>
+                                    correctPLayer2Name ?
+                                        <motion.div
+                                            initial="hidden"
+                                            animate="visible"
+                                            variants={variantsLeft}
+                                            transition={{duration: 0.8}}
+                                        >
+                                            <img src={el3} className="check__icon" alt=""/>
+                                        </motion.div> :
+                                        <motion.div
+                                            initial="hidden"
+                                            animate="visible"
+                                            variants={variantsLeft}
+                                            transition={{duration: 0.8}}
+                                        >
+                                            <img src={el4} className="check__icon" alt=""/>
+                                        </motion.div>
                                 }
                             </div>
                         </div>
-                        {dataCorrect && <CoinFlip player1={players.player1} player2={players.player2} onResultChange={handleResultChange}/>}
-                        {resultFromCoinFlip &&
+                        {dataCorrect && <CoinFlip player1={players.player1} player2={players.player2}
+                                                  onResultChange={handleResultChange}/>}
+                        {starterFromCoinFlip &&
                             <div style={{display: "flex", justifyContent: "center", marginTop: "20px"}}>
-                                <button type="submit" onClick={handleButtonClick} disabled={buttonClicked}>LET'S ROLL!!!</button>
+                                <UnderBoardBttn type="submit" onClick={handleButtonClick} disabled={buttonClicked} text="LET'S ROLL!!!"/>
                             </div>
                         }
                     </form>
