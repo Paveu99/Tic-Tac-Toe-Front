@@ -8,24 +8,27 @@ import el2 from "../styles/images/Number2.png";
 interface Props {
     player1: string;
     player2: string;
-    onResultChange: (result: string) => void;
+    onResultChange: (starter: string, second: string) => void;
 }
 
 export function CoinFlip(props: Props) {
-    const [result, setResult] = useState<string>('');
+    const [starter, setStarter] = useState<string>('');
+    const [second, setSecond] = useState<string>('');
     const [loading, setLoading] = useState<boolean>();
     const [image, setImage] = useState<string>('');
     const flipCoin = () => {
         setLoading(true);
-        setResult('');
+        setStarter('');
         setImage('');
         const flipResult = Math.random();
         setTimeout(() => {
             if (flipResult <= 0.5) {
-                setResult(props.player1);
+                setStarter(props.player1);
+                setSecond(props.player2)
                 setImage(el1);
             } else {
-                setResult(props.player2);
+                setStarter(props.player2);
+                setSecond(props.player1);
                 setImage(el2);
             }
             setLoading(false);
@@ -33,16 +36,16 @@ export function CoinFlip(props: Props) {
     };
 
     useEffect(() => {
-        props.onResultChange(result);
-    }, [props, result]);
+        props.onResultChange(starter, second);
+    }, [props, second, starter]);
 
 
     return (
         <div className="coin-flip-page">
-            {loading ? <Spinner/> : <UnderBoardBttn onClick={flipCoin} text="WHO WILL START?"/>}
+            {loading ? <Spinner/> : <div style={{marginBottom: "10px"}}><UnderBoardBttn onClick={flipCoin} text="WHO WILL START?"/></div>}
             <div className="starting-person">
                 {image && <img className="starting-person__icon" src={image} alt="Coin flip result" />}
-                {result !== '' && <div style={{textAlign: "center",marginTop: "10px"}}> {result.toUpperCase()} WILL START THE GAME AS "X"</div>}
+                {starter !== '' && <div style={{textAlign: "center"}}> {starter.toUpperCase()} WILL START THE GAME AS "X"</div>}
             </div>
         </div>
     );
