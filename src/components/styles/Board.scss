@@ -6,6 +6,7 @@
   grid-template: repeat(3, 1fr) / repeat(3, 1fr);
   grid-gap: 1.5vh;
   position: relative;
+  margin-top: 10vh;
 }
 
 .single_element {
@@ -21,4 +22,16 @@
   padding-top: 10px;
   justify-content: space-evenly;
   align-items: center;
+}
+
+@media screen and (max-width: 576px) {
+  .background {
+    height: 95vw;
+    width: 95vw;
+    background-color: white;
+    display: grid;
+    grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+    grid-gap: 1.5vh;
+    position: relative;
+  }
 }
