@@ -3,8 +3,6 @@ import {Board} from "../components/board/Board.tsx";
 import {useEffect, useState} from "react";
 import {GameStartModal} from "../components/modals/GameStartModal.tsx";
 import {UnderBoardBttn} from "../components/buttons/UnderBoardBttn.tsx";
-import el1 from "../components/styles/images/Number1.png";
-import el2 from "../components/styles/images/Number2.png";
 
 interface Players {
     playerX: string,
@@ -46,6 +44,6 @@ export const GamePage = () => {
             </div>
         }
         <GameStartModal isOpen={openModal} onClose={() => setOpenModal(false)} setPlayers={handleInput}/>
-        {inputDataCorrect && <Board playerX={players.playerX} playerY={players.playerX}/>}
+        {inputDataCorrect && <Board playerX={players.playerX} playerO={players.playerO}/>}
     </div>
 }
