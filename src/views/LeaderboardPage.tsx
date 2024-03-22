@@ -1,5 +1,5 @@
-import {CrossingLine} from "../components/CrossingLine/CrossingLine.tsx";
+import {Stopwatch} from "../components/clock/Clock.tsx";
 
 export const LeaderboardPage = () => {
-    return <CrossingLine/>
+    return <Stopwatch/>
 }
