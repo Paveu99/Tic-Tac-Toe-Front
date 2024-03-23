@@ -4,6 +4,7 @@ import el2 from '../styles/images/O.png';
 import el1 from '../styles/images/X.png';
 import {CrossingLine} from "../CrossingLine/CrossingLine.tsx";
 import {UnderBoardBttn} from "../buttons/UnderBoardBttn.tsx";
+import {Stopwatch} from "../clock/Stopwatch.tsx";
 
 interface Props {
     playerX: string,
@@ -22,6 +23,8 @@ export const Board = (props: Props) => {
     const [xPosition, setXPosition] = useState<string | number | undefined>(0);
     const [yPosition, setYPosition] = useState<string | number | undefined>(0);
     const [angle, setAngle] = useState<string | number | undefined>(0);
+    const [startStopwatch, setStartStopwatch] = useState<boolean>(false);
+    const [resetStopwatch, setResetStopwatch] = useState<boolean>(false);
 
     function checkWinner(board: number[]) {
         const winningCombos = [
@@ -41,6 +44,7 @@ export const Board = (props: Props) => {
                 setXPosition(combo.coordinateX);
                 setYPosition(combo.coordinateY);
                 setAngle(combo.angle);
+                setStartStopwatch(false);
                 return true;
             }
         }
@@ -98,17 +102,19 @@ export const Board = (props: Props) => {
 
             const updatedClickedIndexes = [...clickedIndexes, index];
             setClickedIndexes(updatedClickedIndexes);
+            setStartStopwatch(true);
+            setResetStopwatch(false);
 
             if(isEl1Turn) {
                 if(checkWinner([...clickedIndexesForX, index])) {
                     setIsBoardDisabled(true);
-                    setWinner('X');
+                    setWinner(props.playerX);
                     return;
                 }
             } else {
                 if(checkWinner([...clickedIndexesForO, index])) {
                     setIsBoardDisabled(true);
-                    setWinner('O');
+                    setWinner(props.playerO);
                     return;
                 }
             }
@@ -131,6 +137,8 @@ export const Board = (props: Props) => {
         setIsEl1Turn(true);
         setIsBoardDisabled(false);
         setWinner('');
+        setResetStopwatch(true);
+        setStartStopwatch(false);
     };
 
     const clickedStyle = {
@@ -140,20 +148,26 @@ export const Board = (props: Props) => {
     };
 
     useEffect(() => {
-        console.log(currentImg);
-        console.log(clickedIndexes);
-        console.log(isEl1Turn);
-        console.log(clickedIndexesForO);
-        console.log(clickedIndexesForX);
+        // // console.log(currentImg);
+        // // console.log(clickedIndexes);
+        // // console.log(isEl1Turn);
+        // // console.log(clickedIndexesForO);
+        // // console.log(clickedIndexesForX);
         console.log(winner);
-        console.log(props.playerX);
-        console.log(props.playerO);
-    }, [currentImg]);
-
+        // // console.log(props.playerX);
+        // // console.log(props.playerO);
+        // console.log(startStopwatch);
+        // console.log(resetStopwatch);
+        if (clickedIndexes.length === 9 && !winner) {
+            setStartStopwatch(false);
+            setWinner('DRAW');
+        }
+    }, [clickedIndexes.length, currentImg, winner]);
 
 
     return (
-        <div style={{marginTop: "10 vh"}}>
+        <div style={{marginTop: "5 vh"}}>
+            <Stopwatch start={startStopwatch} reset={resetStopwatch} />
             <div className="background">
                 {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((index) => (
                     <div
@@ -163,7 +177,7 @@ export const Board = (props: Props) => {
                         style={{ ...clickedStyle, backgroundImage: `url(${currentImg[index - 1]})` }}
                     ></div>
                 ))}
-                {winner && <CrossingLine angle={angle} xPosition={xPosition} yPosition={yPosition}/>}
+                {winner && winner !== 'DRAW' && <CrossingLine angle={angle} xPosition={xPosition} yPosition={yPosition}/>}
             </div>
             <div className="board-buttons">
                 <UnderBoardBttn text="RESET" onClick={handleReset}/>
