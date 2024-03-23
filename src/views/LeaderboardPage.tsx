@@ -1,5 +1,3 @@
-import {Stopwatch} from "../components/clock/Clock.tsx";
-
 export const LeaderboardPage = () => {
-    return <Stopwatch/>
+    return <h1>HEJ</h1>
 }
