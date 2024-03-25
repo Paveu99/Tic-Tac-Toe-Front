@@ -16,6 +16,23 @@ export const CrossingLine = (props: Props) => {
     const [x2, setX2] = useState<string | number | undefined>(`${props.xPosition}px`);
     const [y1, setY1] = useState<string | number | undefined>(`${props.yPosition}px`);
     const [y2, setY2] = useState<string | number | undefined>(`${props.yPosition}px`);
+    const [windowSize, setWindowSize] = useState({
+        width: window.innerWidth,
+        height: window.innerHeight
+    });
+
+    useEffect(() => {
+        function handleResize() {
+            setWindowSize({
+                width: window.innerWidth,
+                height: window.innerHeight
+            });
+        }
+
+        window.addEventListener('resize', handleResize);
+
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     useEffect(() => {
         if (props.angle === 45) {
@@ -47,7 +64,7 @@ export const CrossingLine = (props: Props) => {
             animation1__horizontal.beginElement();
             animation2__horizontal.beginElement();
         }
-    }, [props.angle]);
+    }, [props.angle, windowSize]);
 
     const rightLine = <svg className="animated-line-svg">
         <line
