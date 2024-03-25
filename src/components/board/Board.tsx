@@ -5,6 +5,7 @@ import el1 from '../styles/images/X.png';
 import {CrossingLine} from "../CrossingLine/CrossingLine.tsx";
 import {UnderBoardBttn} from "../buttons/UnderBoardBttn.tsx";
 import {Stopwatch} from "../clock/Stopwatch.tsx";
+import {WinnerModal} from "../modals/WinnerModal.tsx";
 
 interface Props {
     playerX: string,
@@ -12,6 +13,7 @@ interface Props {
 }
 
 export const Board = (props: Props) => {
+
     const initialImgState = Array(9).fill('');
     const [currentImg, setCurrentImg] = useState<string[]>(initialImgState);
     const [clickedIndexes, setClickedIndexes] = useState<number[]>([]);
@@ -25,6 +27,8 @@ export const Board = (props: Props) => {
     const [angle, setAngle] = useState<string | number | undefined>(0);
     const [startStopwatch, setStartStopwatch] = useState<boolean>(false);
     const [resetStopwatch, setResetStopwatch] = useState<boolean>(false);
+    const [time, setTime] = useState<string>('');
+    const [openModal, setOpenModal] = useState<boolean>(false);
 
     function checkWinner(board: number[]) {
         const winningCombos = [
@@ -139,7 +143,12 @@ export const Board = (props: Props) => {
         setWinner('');
         setResetStopwatch(true);
         setStartStopwatch(false);
+        setTime('');
     };
+
+    const handleTime = (time: string) => {
+        setTime(time);
+    }
 
     const clickedStyle = {
         backgroundSize: '90%',
@@ -153,7 +162,7 @@ export const Board = (props: Props) => {
         // // console.log(isEl1Turn);
         // // console.log(clickedIndexesForO);
         // // console.log(clickedIndexesForX);
-        console.log(winner);
+        // console.log(winner);
         // // console.log(props.playerX);
         // // console.log(props.playerO);
         // console.log(startStopwatch);
@@ -162,27 +171,66 @@ export const Board = (props: Props) => {
             setStartStopwatch(false);
             setWinner('DRAW');
         }
+
+        if (winner) {
+            setOpenModal(true)
+            console.log(winner)
+        }
     }, [clickedIndexes.length, currentImg, winner]);
 
 
     return (
-        <div style={{marginTop: "5 vh"}}>
-            <Stopwatch start={startStopwatch} reset={resetStopwatch} />
-            <div className="background">
-                {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((index) => (
-                    <div
-                        key={index}
-                        className={`single_element ${isBoardDisabled || !!currentImg[index - 1] ? 'disabled' : ''}`}
-                        onClick={() => handleClick(index)}
-                        style={{ ...clickedStyle, backgroundImage: `url(${currentImg[index - 1]})` }}
-                    ></div>
-                ))}
-                {winner && winner !== 'DRAW' && <CrossingLine angle={angle} xPosition={xPosition} yPosition={yPosition}/>}
+        <div className="board">
+            <div className="player-x">
+                <p className="player-x__name">
+                    {props.playerX}:
+                </p>
+                <div
+                    className={"represented-image"}
+                    // className={`single_element`}
+                    style={{
+                        backgroundImage: `url(${el1})`,
+                        backgroundSize: 'auto 15vh',
+                        height: '15vh',
+                        width: '15vh'
+                    }}
+                ></div>
             </div>
-            <div className="board-buttons">
-                <UnderBoardBttn text="RESET" onClick={handleReset}/>
-                <UnderBoardBttn text="UNDO" onClick={handleReset}/>
+            <div className="game">
+                <Stopwatch start={startStopwatch} reset={resetStopwatch} time={handleTime}/>
+                <div className="background">
+                    {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((index) => (
+                        <div
+                            key={index}
+                            className={`single_element ${isBoardDisabled || !!currentImg[index - 1] ? 'disabled' : ''}`}
+                            onClick={() => handleClick(index)}
+                            style={{...clickedStyle, backgroundImage: `url(${currentImg[index - 1]})`}}
+                        ></div>
+                    ))}
+                    {winner && winner !== 'DRAW' &&
+                        <CrossingLine angle={angle} xPosition={xPosition} yPosition={yPosition}/>}
+                </div>
+                <div className="board-buttons">
+                    <UnderBoardBttn text="RESET" onClick={handleReset}/>
+                    <UnderBoardBttn text="UNDO" onClick={handleReset}/>
+                </div>
             </div>
+            <div className="player-o">
+                <p className="player-o__name">
+                    {props.playerO}:
+                </p>
+                <div
+                    className={"represented-image"}
+                    // className={`single_element`}
+                    style={{
+                        backgroundImage: `url(${el2})`,
+                        backgroundSize: 'auto 15vh',
+                        height: '15vh',
+                        width: '15vh'
+                    }}
+                ></div>
+            </div>
+            <WinnerModal isOpen={openModal} onClose={() => setOpenModal(false)} winner={winner} time={time}/>
         </div>
     );
 };

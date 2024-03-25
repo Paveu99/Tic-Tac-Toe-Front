@@ -1,3 +1,23 @@
+.board {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.player-x {
+  margin-right: 5vw;
+  &__name {
+    font-size: 1.5em;
+  }
+}
+
+.player-o {
+  margin-left: 5vw;
+  &__name {
+    font-size: 1.5em;
+  }
+}
+
 .background {
   height: 70vh;
   width: 70vh;
