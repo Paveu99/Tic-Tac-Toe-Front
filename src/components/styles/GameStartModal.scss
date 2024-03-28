@@ -1,4 +1,7 @@
 .react-modal-overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: fixed;
   top: 0;
   left: 0;
@@ -11,13 +14,14 @@
 }
 
 .react-modal-wrapper {
+  min-width: 350px;
+  width: 40vh;
   max-width: 500px;
-  margin: 10vh auto;
 }
 
 .react-modal-content {
   display: block;
-  height: 70vh;
+  height: 50vh;
   min-height: 400px;
   text-align: left;
   position: relative;
