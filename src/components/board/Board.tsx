@@ -182,19 +182,22 @@ export const Board = (props: Props) => {
     return (
         <div className="board">
             <div className="player-x">
-                <p className="player-x__name">
-                    {props.playerX}:
-                </p>
-                <div
-                    className={"represented-image"}
-                    // className={`single_element`}
-                    style={{
-                        backgroundImage: `url(${el1})`,
-                        backgroundSize: 'auto 15vh',
-                        height: '15vh',
-                        width: '15vh'
-                    }}
-                ></div>
+                <div style={{display: "flex", alignItems: "center", flexDirection: "column", justifyContent: "center"}}>
+                    <p className="player-x__name">
+                        {props.playerX}
+                    </p>
+                    <div
+                        className={"represented-image"}
+                        style={{
+                            backgroundImage: `url(${el1})`,
+                            backgroundColor: `${isEl1Turn ? "rgba(166,80,80,0.5)" : "rgba(138, 22, 22, 1)"}`,
+                            backgroundSize: 'auto 15vh',
+                            height: '15vh',
+                            width: '15vh',
+                            borderRadius: '20px',
+                        }}
+                    ></div>
+                </div>
             </div>
             <div className="game">
                 <Stopwatch start={startStopwatch} reset={resetStopwatch} time={handleTime}/>
@@ -216,19 +219,22 @@ export const Board = (props: Props) => {
                 </div>
             </div>
             <div className="player-o">
-                <p className="player-o__name">
-                    {props.playerO}:
-                </p>
-                <div
-                    className={"represented-image"}
-                    // className={`single_element`}
-                    style={{
-                        backgroundImage: `url(${el2})`,
-                        backgroundSize: 'auto 15vh',
-                        height: '15vh',
-                        width: '15vh'
-                    }}
-                ></div>
+                <div style={{display: "flex", alignItems: "center", flexDirection: "column"}}>
+                    <p className="player-o__name">
+                        {props.playerO}
+                    </p>
+                    <div
+                        className={"represented-image"}
+                        style={{
+                            backgroundImage: `url(${el2})`,
+                            backgroundColor: `${!isEl1Turn ? "rgba(166,80,80,0.5)" : "rgba(138, 22, 22, 1)"}`,
+                            backgroundSize: 'auto 15vh',
+                            height: '15vh',
+                            width: '15vh',
+                            borderRadius: '20px',
+                        }}
+                    ></div>
+                </div>
             </div>
             <WinnerModal isOpen={openModal} onClose={() => setOpenModal(false)} winner={winner} time={time}/>
         </div>
