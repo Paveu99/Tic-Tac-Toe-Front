@@ -1,6 +1,6 @@
 import {animated, useSpring, useTransition} from "@react-spring/web";
 import { useEffect } from "react";
-import "../styles/GameStartModal.scss";
+import "../styles/WinnerModal.scss";
 
 interface Props {
     isOpen: boolean,
@@ -46,28 +46,22 @@ export const WinnerModal = (props: Props) => {
 
     return modalTransition((_styles, isOpen) => isOpen && (
         <animated.div className='react-modal-overlay' onClick={handleClose}>
-            <animated.div style={springs} className='react-modal-wrapper' onClick={e => e.stopPropagation()}>
-                <div className='react-modal-content'>
+            <animated.div style={springs} className='react-winner-modal-wrapper' onClick={e => e.stopPropagation()}>
+                <div className='react-winner-modal-content'>
                     <header className="add-form-header">
-                        <div>
-                            <h2 style={
-                                {
-                                    height: "30px",
-                                    fontWeight: "bold",
-                                    marginTop: "5px",
-                                    marginBottom: "10px",
-                                    background: 'linear-gradient(to right, #ffffff, #ffffff)',
-                                    WebkitBackgroundClip: 'text',
-                                    color: 'transparent',
-                                }
-                            }>
-                                NEW GAME
-                            </h2>
-                        </div>
                         <a href='#' className="close" onClick={handleClose}></a>
                     </header>
-                    <hr/>
-                    WINNER IS: {props.winner} with time: {props.time} minutes
+                    <div className='game-results'>
+                        <div style={{fontSize: "2vh"}}>
+                            {props.winner === "DRAW" ? "The result is:" : "WINNER IS:"}
+                        </div>
+                        <div className="winner-div">
+                            {props.winner}
+                        </div>
+                        <div style={{fontSize: "2vh"}}>
+                            {props.winner === "DRAW" ? "it took:" : "with time:"} {props.time} minutes
+                        </div>
+                    </div>
                 </div>
             </animated.div>
         </animated.div>
