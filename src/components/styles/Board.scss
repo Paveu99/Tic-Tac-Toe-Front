@@ -1,11 +1,14 @@
 .board {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
 }
 
 .player-x {
   margin-right: 5vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
   &__name {
     font-size: 1.5em;
   }
@@ -13,6 +16,10 @@
 
 .player-o {
   margin-left: 5vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
   &__name {
     font-size: 1.5em;
   }
@@ -44,14 +51,36 @@
   align-items: center;
 }
 
-@media screen and (max-width: 576px) {
+@media screen and (max-width: 1200px) {
+  .board {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+            "game game"
+            "player-x player-o"
+  }
+  .game{
+    grid-area: game;
+  }
+  .player-x{
+    grid-area: player-x;
+    &__name {
+      font-size: 1rem;
+    }
+  }
+  .player-o{
+    grid-area: player-o;
+    &__name {
+      font-size: 1rem;
+    }
+  }
   .background {
     height: 95vw;
     width: 95vw;
     background-color: white;
     display: grid;
     grid-template: repeat(3, 1fr) / repeat(3, 1fr);
-    grid-gap: 1.5vh;
+    grid-gap: 1vh;
     position: relative;
   }
 }
