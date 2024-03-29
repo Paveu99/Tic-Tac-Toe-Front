@@ -30,6 +30,8 @@ export const Board = (props: Props) => {
     const [resetStopwatch, setResetStopwatch] = useState<boolean>(false);
     const [time, setTime] = useState<string>('');
     const [openModal, setOpenModal] = useState<boolean>(false);
+    const [xNumberOfWins, setXNumberOfWins] = useState<number>(0);
+    const [yNumberOfWins, setYNumberOfWins] = useState<number>(0);
 
     function checkWinner(board: number[]) {
         const winningCombos = [
@@ -114,12 +116,14 @@ export const Board = (props: Props) => {
                 if(checkWinner([...clickedIndexesForX, index])) {
                     setIsBoardDisabled(true);
                     setWinner(props.playerX);
+                    setXNumberOfWins(xNumberOfWins + 1);
                     return;
                 }
             } else {
                 if(checkWinner([...clickedIndexesForO, index])) {
                     setIsBoardDisabled(true);
                     setWinner(props.playerO);
+                    setYNumberOfWins(yNumberOfWins + 1)
                     return;
                 }
             }
@@ -205,6 +209,7 @@ export const Board = (props: Props) => {
                             borderRadius: '20px',
                         }}
                     ></div>
+                    <div className="current-result">{xNumberOfWins}</div>
                 </div>
             </div>
             <div className="game">
@@ -243,6 +248,7 @@ export const Board = (props: Props) => {
                             borderRadius: '20px',
                         }}
                     ></div>
+                    <div className="current-result">{yNumberOfWins}</div>
                 </div>
             </div>
             <WinnerModal isOpen={openModal} onClose={() => setOpenModal(false)} winner={winner} time={time}/>
