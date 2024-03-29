@@ -50,6 +50,7 @@ export const GameStartModal = (props: Props) => {
         setSecondFromCoinFlip('');
         setP1NumOfChar(0);
         setP2NumOfChar(0);
+        setButtonClicked(false);
         props.onClose();
     }
 
@@ -57,16 +58,16 @@ export const GameStartModal = (props: Props) => {
 
         setPlayers(players => ({
             ...players,
-            [key]: value
+            [key]: value.trim()
         }));
 
         if (key === 'player1') {
             setCorrectPLayer1Name(value.length > 0);
-            setP1NumOfChar(value.length);
+            setP1NumOfChar(value.trim().length);
         }
         if (key === 'player2') {
             setCorrectPLayer2Name(value.length > 0);
-            setP2NumOfChar(value.length);
+            setP2NumOfChar(value.trim().length);
         }
     };
 
@@ -74,6 +75,8 @@ export const GameStartModal = (props: Props) => {
         if (!buttonClicked) {
             props.setPlayers(starterFromCoinFlip, secondFromCoinFlip, dataCorrect);
             setButtonClicked(true);
+            handleClose();
+            resetPlayersNames();
         }
     };
 
@@ -100,7 +103,7 @@ export const GameStartModal = (props: Props) => {
         document.addEventListener("keydown", handleEscape)
 
         return () => document.removeEventListener("keydown", handleEscape)
-    }, [])
+    }, [handleEscape])
 
     const modalTransition = useTransition(props.isOpen, {
         from: { opacity: 0},
@@ -120,7 +123,7 @@ export const GameStartModal = (props: Props) => {
     });
 
     useEffect(() => {
-        if (players.player1 === players.player2) {
+        if (players.player1.trim() === players.player2.trim()) {
             setCorrectPLayer1Name(false);
             setCorrectPLayer2Name(false);
         } else {
@@ -128,11 +131,11 @@ export const GameStartModal = (props: Props) => {
             setCorrectPLayer2Name(true);
         }
 
-        if (players.player1.length === 0) {
+        if (players.player1.trim().length === 0) {
             setCorrectPLayer1Name(false);
         }
 
-        if (players.player2.length === 0) {
+        if (players.player2.trim().length === 0) {
             setCorrectPLayer2Name(false);
         }
 
@@ -181,7 +184,7 @@ export const GameStartModal = (props: Props) => {
                                     className="start-form__name input"
                                     value={players.player1}
                                     onChange={e => handleChange('player1', e.target.value)}
-                                    maxLength={20}
+                                    maxLength={10}
                                 />
                                 <Counter numOfChars={p1NumOfChar}/>
                                 {
@@ -220,7 +223,7 @@ export const GameStartModal = (props: Props) => {
                                     className="start-form__name input"
                                     value={players.player2}
                                     onChange={e => handleChange('player2', e.target.value)}
-                                    maxLength={20}
+                                    maxLength={10}
                                 />
                                 <Counter numOfChars={p2NumOfChar}/>
                                 {
