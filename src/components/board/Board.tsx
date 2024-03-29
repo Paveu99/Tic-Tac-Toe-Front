@@ -10,6 +10,7 @@ import {WinnerModal} from "../modals/WinnerModal.tsx";
 interface Props {
     playerX: string,
     playerO: string
+    handleResetGame: () => void
 }
 
 export const Board = (props: Props) => {
@@ -146,6 +147,13 @@ export const Board = (props: Props) => {
         setTime('');
     };
 
+    const handleGameReset = () => {
+        handleReset();
+        setXNumberOfWins(0);
+        setYNumberOfWins(0);
+        props.handleResetGame();
+    }
+
     const handleTime = (time: string) => {
         setTime(time);
     }
@@ -214,8 +222,9 @@ export const Board = (props: Props) => {
                         <CrossingLine angle={angle} xPosition={xPosition} yPosition={yPosition}/>}
                 </div>
                 <div className="board-buttons">
-                    <UnderBoardBttn text="RESET" onClick={handleReset}/>
-                    <UnderBoardBttn text="UNDO" onClick={handleReset}/>
+                    <UnderBoardBttn text="RESET GAME" onClick={handleReset}/>
+                    <UnderBoardBttn text="NEW GAME" onClick={handleGameReset}/>
+                    <UnderBoardBttn text="SAVE RESULT" onClick={handleReset}/>
                 </div>
             </div>
             <div className="player-o">

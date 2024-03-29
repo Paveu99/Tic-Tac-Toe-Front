@@ -25,6 +25,11 @@ export const GamePage = () => {
         }, 500);
     }
 
+    const handleResult = () => {
+        setPlayers({playerX: '', playerO: ''});
+        setInputDataCorrect(false);
+    }
+
     useEffect(() => {
         console.log(players);
         console.log(inputDataCorrect);
@@ -44,6 +49,6 @@ export const GamePage = () => {
             </div>
         }
         <GameStartModal isOpen={openModal} onClose={() => setOpenModal(false)} setPlayers={handleInput}/>
-        {inputDataCorrect && <Board playerX={players.playerX} playerO={players.playerO}/>}
+        {inputDataCorrect && <Board playerX={players.playerX} playerO={players.playerO} handleResetGame={handleResult}/>}
     </div>
 }
