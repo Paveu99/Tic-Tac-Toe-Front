@@ -3,5 +3,5 @@ interface Props {
 }
 
 export const Counter = (props: Props) => {
-    return <div style={{marginLeft: "5px"}}>{props.numOfChars}/20</div>
+    return <div style={{marginLeft: "5px"}}>{props.numOfChars}/10</div>
 }
