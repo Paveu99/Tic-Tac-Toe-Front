@@ -52,13 +52,13 @@ export const WinnerModal = (props: Props) => {
                         <a href='#' className="close" onClick={handleClose}></a>
                     </header>
                     <div className='game-results'>
-                        <div style={{fontSize: "2vh"}}>
+                        <div>
                             {props.winner === "DRAW" ? "The result is:" : "WINNER IS:"}
                         </div>
                         <div className="winner-div">
                             {props.winner}
                         </div>
-                        <div style={{fontSize: "2vh"}}>
+                        <div>
                             {props.winner === "DRAW" ? "it took:" : "with time:"} {props.time} minutes
                         </div>
                     </div>
