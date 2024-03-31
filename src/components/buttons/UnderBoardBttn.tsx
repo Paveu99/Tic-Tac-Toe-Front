@@ -1,7 +1,8 @@
 import '../styles/UnderBoardBttn.scss'
+import {FormEvent} from "react";
 interface Props {
     text: string;
-    onClick?: () => void;
+    onClick?: (e: FormEvent) => void;
     type?: "submit" | "reset" | "button" | undefined;
     disabled?: boolean;
 }
