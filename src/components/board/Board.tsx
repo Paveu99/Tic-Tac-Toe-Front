@@ -1,12 +1,12 @@
 import '../styles/Board.scss';
-import {useEffect, useState} from "react";
+import {FormEvent, useEffect, useState} from "react";
 import el2 from '../styles/images/O.png';
 import el1 from '../styles/images/X.png';
 import {CrossingLine} from "../CrossingLine/CrossingLine.tsx";
 import {UnderBoardBttn} from "../buttons/UnderBoardBttn.tsx";
 import {Stopwatch} from "../clock/Stopwatch.tsx";
 import {WinnerModal} from "../modals/WinnerModal.tsx";
-
+import {AddNewMatch} from "types"
 interface Props {
     playerX: string,
     playerO: string
@@ -32,6 +32,14 @@ export const Board = (props: Props) => {
     const [openModal, setOpenModal] = useState<boolean>(false);
     const [xNumberOfWins, setXNumberOfWins] = useState<number>(0);
     const [yNumberOfWins, setYNumberOfWins] = useState<number>(0);
+    const [result, setResult] = useState<AddNewMatch>({
+        player1: props.playerX,
+        player2: props.playerO,
+        winner: '',
+        player1Result: xNumberOfWins,
+        player2Result: yNumberOfWins,
+        date: '',
+    });
 
     function checkWinner(board: number[]) {
         const winningCombos = [
@@ -101,6 +109,20 @@ export const Board = (props: Props) => {
         }
     }
 
+    function getCurrentDateTimeUTC() {
+        const now = new Date();
+
+        const hours = String(now.getUTCHours()).padStart(2, '0');
+        const minutes = String(now.getUTCMinutes()).padStart(2, '0');
+        const seconds = String(now.getUTCSeconds()).padStart(2, '0');
+
+        const day = String(now.getUTCDate()).padStart(2, '0');
+        const month = String(now.getUTCMonth() + 1).padStart(2, '0');
+        const year = now.getUTCFullYear();
+
+        return `${hours}:${minutes}:${seconds} ${day}-${month}-${year} UTC`;
+    }
+
     const handleClick = (index: number) => {
         if (!clickedIndexes.includes(index) && !isBoardDisabled) {
             const newCurrentImg = [...currentImg];
@@ -111,6 +133,12 @@ export const Board = (props: Props) => {
             setClickedIndexes(updatedClickedIndexes);
             setStartStopwatch(true);
             setResetStopwatch(false);
+            if (clickedIndexes.length === 0) {
+                setResult(form => ({
+                    ...form,
+                    'date': getCurrentDateTimeUTC()
+                }))
+            }
 
             if(isEl1Turn) {
                 if(checkWinner([...clickedIndexesForX, index])) {
@@ -123,7 +151,7 @@ export const Board = (props: Props) => {
                 if(checkWinner([...clickedIndexesForO, index])) {
                     setIsBoardDisabled(true);
                     setWinner(props.playerO);
-                    setYNumberOfWins(yNumberOfWins + 1)
+                    setYNumberOfWins(yNumberOfWins + 1);
                     return;
                 }
             }
@@ -137,6 +165,27 @@ export const Board = (props: Props) => {
             setIsEl1Turn(!isEl1Turn);
         }
     };
+
+    const saveData = async (e: FormEvent) => {
+        e.preventDefault()
+
+        if (xNumberOfWins > 0 || yNumberOfWins > 0) {
+            try {
+                const res = await fetch('http://localhost:3001/match', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(result),
+                });
+                const data = await res.json();
+                console.log(data)
+                handleGameReset()
+            } catch (error) {
+                console.error('Error adding record:', error);
+            }
+        }
+    }
 
     const handleReset = () => {
         setCurrentImg(initialImgState);
@@ -156,6 +205,14 @@ export const Board = (props: Props) => {
         setXNumberOfWins(0);
         setYNumberOfWins(0);
         props.handleResetGame();
+        setResult({
+            player1: props.playerX,
+            player2: props.playerO,
+            winner: '',
+            player1Result: 0,
+            player2Result: 0,
+            date: '',
+        })
     }
 
     const handleTime = (time: string) => {
@@ -178,7 +235,7 @@ export const Board = (props: Props) => {
         // // console.log(props.playerX);
         // // console.log(props.playerO);
         // console.log(startStopwatch);
-        // console.log(resetStopwatch);
+        console.log(result);
         if (clickedIndexes.length === 9 && !winner) {
             setStartStopwatch(false);
             setWinner('DRAW');
@@ -188,8 +245,17 @@ export const Board = (props: Props) => {
             setOpenModal(true)
             console.log(winner)
         }
-    }, [clickedIndexes.length, currentImg, winner]);
+    }, [clickedIndexes.length, currentImg, result, winner]);
 
+    useEffect(() => {
+        const currWinner = (xNumberOfWins > yNumberOfWins) ? props.playerX : props.playerO;
+        setResult(form => ({
+            ...form,
+            'player1Result': xNumberOfWins,
+            'player2Result': yNumberOfWins,
+            'winner': (xNumberOfWins === yNumberOfWins) ? 'DRAW' : currWinner
+        }))
+    }, [props.playerO, props.playerX, winner, xNumberOfWins, yNumberOfWins]);
 
     return (
         <div className="board">
@@ -229,7 +295,8 @@ export const Board = (props: Props) => {
                 <div className="board-buttons">
                     <UnderBoardBttn text="RESET GAME" onClick={handleReset}/>
                     <UnderBoardBttn text="NEW GAME" onClick={handleGameReset}/>
-                    <UnderBoardBttn text="SAVE RESULT" onClick={handleReset}/>
+                    <UnderBoardBttn text="SAVE RESULT" onClick={saveData}/>
+                    {/*<button onClick={saveData}>SAVE RESULT</button>*/}
                 </div>
             </div>
             <div className="player-o">
