@@ -38,8 +38,9 @@ export const Board = (props: Props) => {
         winner: '',
         player1Result: xNumberOfWins,
         player2Result: yNumberOfWins,
-        date: '',
+        date: getCurrentDateTimeUTC(),
     });
+    const [gameStarted, setGameStarted] = useState<boolean>(false);
 
     function checkWinner(board: number[]) {
         const winningCombos = [
@@ -133,12 +134,7 @@ export const Board = (props: Props) => {
             setClickedIndexes(updatedClickedIndexes);
             setStartStopwatch(true);
             setResetStopwatch(false);
-            if (clickedIndexes.length === 0) {
-                setResult(form => ({
-                    ...form,
-                    'date': getCurrentDateTimeUTC()
-                }))
-            }
+            setGameStarted(true);
 
             if(isEl1Turn) {
                 if(checkWinner([...clickedIndexesForX, index])) {
@@ -169,7 +165,7 @@ export const Board = (props: Props) => {
     const saveData = async (e: FormEvent) => {
         e.preventDefault()
 
-        if (xNumberOfWins > 0 || yNumberOfWins > 0) {
+        if ((xNumberOfWins > 0 || yNumberOfWins > 0) && gameStarted) {
             try {
                 const res = await fetch('http://localhost:3001/match', {
                     method: 'POST',
@@ -212,7 +208,8 @@ export const Board = (props: Props) => {
             player1Result: 0,
             player2Result: 0,
             date: '',
-        })
+        });
+        setGameStarted(false);
     }
 
     const handleTime = (time: string) => {
