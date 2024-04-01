@@ -89,3 +89,23 @@
     position: relative;
   }
 }
+
+.popup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  color: red;
+  transform: translate(-50%, -50%);
+  background-color: #0d1010;
+  padding: 20px;
+  border: 2px solid #000000;
+  border-radius: 5px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.popup-content {
+  font-size: 24px;
+}

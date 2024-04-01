@@ -7,6 +7,8 @@ import {UnderBoardBttn} from "../buttons/UnderBoardBttn.tsx";
 import {Stopwatch} from "../clock/Stopwatch.tsx";
 import {WinnerModal} from "../modals/WinnerModal.tsx";
 import {AddNewMatch} from "types"
+import { useTransition} from "@react-spring/web";
+import { animated } from 'react-spring';
 interface Props {
     playerX: string,
     playerO: string
@@ -41,6 +43,8 @@ export const Board = (props: Props) => {
         date: getCurrentDateTimeUTC(),
     });
     const [gameStarted, setGameStarted] = useState<boolean>(false);
+    const [showPopup, setShowPopup] = useState(false);
+
 
     function checkWinner(board: number[]) {
         const winningCombos = [
@@ -176,12 +180,29 @@ export const Board = (props: Props) => {
                 });
                 const data = await res.json();
                 console.log(data)
-                handleGameReset()
+                handleThis();
+                setTimeout(() => {
+                    handleGameReset();
+                }, 2500)
             } catch (error) {
                 console.error('Error adding record:', error);
             }
         }
     }
+
+    const transitions = useTransition(showPopup, {
+        from: { opacity: 0, transform: 'translate(-50%, -50%) scale(0.5)' },
+        enter: { opacity: 1, transform: 'translate(-50%, -50%) scale(1)' },
+        leave: { opacity: 0, transform: 'translate(-50%, -50%) scale(0.5)' },
+        config: { duration: 200 },
+    });
+
+    const handleThis = () => {
+        setShowPopup(true);
+        setTimeout(() => {
+            setShowPopup(false);
+        }, 2000); // Popup znika po 2 sekundach
+    };
 
     const handleReset = () => {
         setCurrentImg(initialImgState);
@@ -290,10 +311,16 @@ export const Board = (props: Props) => {
                         <CrossingLine angle={angle} xPosition={xPosition} yPosition={yPosition}/>}
                 </div>
                 <div className="board-buttons">
-                    <UnderBoardBttn text="RESET GAME" onClick={handleReset}/>
+                    <UnderBoardBttn text="RESET ROUND" onClick={handleReset}/>
                     <UnderBoardBttn text="NEW GAME" onClick={handleGameReset}/>
                     <UnderBoardBttn text="SAVE RESULT" onClick={saveData}/>
-                    {/*<button onClick={saveData}>SAVE RESULT</button>*/}
+                    {transitions((styles, item) =>
+                            item && (
+                                <animated.div style={styles} className="popup">
+                                    <span className="popup-content">Game saved!</span>
+                                </animated.div>
+                            )
+                    )}
                 </div>
             </div>
             <div className="player-o">
