@@ -111,4 +111,9 @@
 
 .popup-content {
   font-size: 24px;
+  &__description {
+    color: white;
+    font-size: 18px;
+    text-align: justify;
+  }
 }

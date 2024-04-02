@@ -199,10 +199,16 @@ export const Board = (props: Props) => {
 
     const handleThis = () => {
         setShowPopup(true);
-        setTimeout(() => {
-            setShowPopup(false);
-        }, 2000); // Popup znika po 2 sekundach
     };
+    const closeSave = () => {
+        setShowPopup(false);
+        handleGameReset();
+    }
+
+    const closeOnly = () => {
+        setShowPopup(false);
+    }
+
 
     const handleReset = () => {
         setCurrentImg(initialImgState);
@@ -317,7 +323,13 @@ export const Board = (props: Props) => {
                     {transitions((styles, item) =>
                             item && (
                                 <animated.div style={styles} className="popup">
-                                    <span className="popup-content">Game saved!</span>
+                                    <span className="popup-content">Are you sure?</span>
+                                    <br/>
+                                    <span className="popup-content__description">Once saved, you can no longer come back to this game</span>
+                                    <div style={{display: "flex", justifyContent: "center", marginTop: "10px", gap: "15px", marginBottom: "10px"}}>
+                                        <UnderBoardBttn text="Yes" onClick={closeSave}/>
+                                        <UnderBoardBttn text="No" onClick={closeOnly}/>
+                                    </div>
                                 </animated.div>
                             )
                     )}
