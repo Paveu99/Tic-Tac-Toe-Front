@@ -44,6 +44,7 @@ export const Board = (props: Props) => {
     });
     const [gameStarted, setGameStarted] = useState<boolean>(false);
     const [showPopup, setShowPopup] = useState(false);
+    const [showKeepGoingPopup, setShowKeepGoingPopup] = useState(false);
 
 
     function checkWinner(board: number[]) {
@@ -181,9 +182,6 @@ export const Board = (props: Props) => {
                 const data = await res.json();
                 console.log(data)
                 handleThis();
-                setTimeout(() => {
-                    handleGameReset();
-                }, 2500)
             } catch (error) {
                 console.error('Error adding record:', error);
             }
@@ -197,9 +195,17 @@ export const Board = (props: Props) => {
         config: { duration: 200 },
     });
 
+    const transitionsB = useTransition(showKeepGoingPopup, {
+        from: { opacity: 0, transform: 'translate(-50%, -50%) scale(0.5)' },
+        enter: { opacity: 1, transform: 'translate(-50%, -50%) scale(1)' },
+        leave: { opacity: 0, transform: 'translate(-50%, -50%) scale(0.5)' },
+        config: { duration: 200 },
+    });
+
     const handleThis = () => {
         setShowPopup(true);
     };
+
     const closeSave = () => {
         setShowPopup(false);
         handleGameReset();
@@ -207,6 +213,14 @@ export const Board = (props: Props) => {
 
     const closeOnly = () => {
         setShowPopup(false);
+    }
+
+    const handleKeepGoing = () => {
+        setShowKeepGoingPopup(true);
+    }
+
+    const closeKeepGoing = () => {
+        setShowKeepGoingPopup(false);
     }
 
 
@@ -250,15 +264,6 @@ export const Board = (props: Props) => {
     };
 
     useEffect(() => {
-        // // console.log(currentImg);
-        // // console.log(clickedIndexes);
-        // // console.log(isEl1Turn);
-        // // console.log(clickedIndexesForO);
-        // // console.log(clickedIndexesForX);
-        // console.log(winner);
-        // // console.log(props.playerX);
-        // // console.log(props.playerO);
-        // console.log(startStopwatch);
         console.log(result);
         if (clickedIndexes.length === 9 && !winner) {
             setStartStopwatch(false);
@@ -329,6 +334,18 @@ export const Board = (props: Props) => {
                                     <div style={{display: "flex", justifyContent: "center", marginTop: "10px", gap: "15px", marginBottom: "10px"}}>
                                         <UnderBoardBttn text="Yes" onClick={closeSave}/>
                                         <UnderBoardBttn text="No" onClick={closeOnly}/>
+                                    </div>
+                                </animated.div>
+                            )
+                    )}
+                    {transitionsB((styles, item) =>
+                            item && (
+                                <animated.div style={styles} className="popup">
+                                    <span className="popup-content">You cannot save your progress!</span>
+                                    <br/>
+                                    <span className="popup-content__description">No result was recorded, finish at least one game to save the game</span>
+                                    <div style={{display: "flex", justifyContent: "center", marginTop: "10px", gap: "15px", marginBottom: "10px"}}>
+                                        <UnderBoardBttn text="Ok" onClick={closeKeepGoing}/>
                                     </div>
                                 </animated.div>
                             )
