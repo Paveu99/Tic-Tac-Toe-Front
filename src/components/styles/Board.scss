@@ -92,9 +92,12 @@
 
 .popup {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   position: fixed;
+  width: 250px;
+  text-align: center;
   top: 50%;
   left: 50%;
   color: red;
