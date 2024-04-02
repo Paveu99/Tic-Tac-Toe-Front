@@ -173,15 +173,6 @@ export const Board = (props: Props) => {
 
         if (gameStarted) {
             try {
-                const res = await fetch('http://localhost:3001/match', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(result),
-                });
-                const data = await res.json();
-                console.log(data)
                 handleThis();
             } catch (error) {
                 console.error('Error adding record:', error);
@@ -209,9 +200,20 @@ export const Board = (props: Props) => {
         setShowPopup(true);
     };
 
-    const closeSave = () => {
-        setShowPopup(false);
-        handleGameReset();
+    const closeSave = async () => {
+        const res = await fetch('http://localhost:3001/match', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(result),
+        });
+        const data = await res.json();
+        console.log(data)
+        if (data) {
+            setShowPopup(false);
+            handleGameReset();
+        }
     }
 
     const closeOnly = () => {
