@@ -139,12 +139,12 @@ export const Board = (props: Props) => {
             setClickedIndexes(updatedClickedIndexes);
             setStartStopwatch(true);
             setResetStopwatch(false);
-            setGameStarted(true);
 
             if(isEl1Turn) {
                 if(checkWinner([...clickedIndexesForX, index])) {
                     setIsBoardDisabled(true);
                     setWinner(props.playerX);
+                    setGameStarted(true);
                     setXNumberOfWins(xNumberOfWins + 1);
                     return;
                 }
@@ -152,6 +152,7 @@ export const Board = (props: Props) => {
                 if(checkWinner([...clickedIndexesForO, index])) {
                     setIsBoardDisabled(true);
                     setWinner(props.playerO);
+                    setGameStarted(true);
                     setYNumberOfWins(yNumberOfWins + 1);
                     return;
                 }
@@ -170,7 +171,7 @@ export const Board = (props: Props) => {
     const saveData = async (e: FormEvent) => {
         e.preventDefault()
 
-        if ((xNumberOfWins > 0 || yNumberOfWins > 0) && gameStarted) {
+        if (gameStarted) {
             try {
                 const res = await fetch('http://localhost:3001/match', {
                     method: 'POST',
@@ -185,6 +186,8 @@ export const Board = (props: Props) => {
             } catch (error) {
                 console.error('Error adding record:', error);
             }
+        } else {
+            handleKeepGoing();
         }
     }
 
@@ -268,13 +271,14 @@ export const Board = (props: Props) => {
         if (clickedIndexes.length === 9 && !winner) {
             setStartStopwatch(false);
             setWinner('DRAW');
+            setGameStarted(true);
         }
 
         if (winner) {
             setOpenModal(true)
             console.log(winner)
         }
-    }, [clickedIndexes.length, currentImg, result, winner]);
+    }, [clickedIndexes.length, currentImg, result, winner, gameStarted]);
 
     useEffect(() => {
         const currWinner = (xNumberOfWins > yNumberOfWins) ? props.playerX : props.playerO;
