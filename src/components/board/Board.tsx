@@ -328,9 +328,9 @@ export const Board = (props: Props) => {
                         <CrossingLine angle={angle} xPosition={xPosition} yPosition={yPosition}/>}
                 </div>
                 <div className="board-buttons">
-                    <UnderBoardBttn text="RESET ROUND" onClick={handleReset}/>
-                    <UnderBoardBttn text="NEW GAME" onClick={handleGameReset}/>
-                    <UnderBoardBttn text="SAVE RESULT" onClick={saveData}/>
+                    <UnderBoardBttn text={nextOrReset} onClick={handleReset} disabled={showKeepGoingPopup || showPopup}/>
+                    <UnderBoardBttn text="NEW GAME" onClick={handleGameReset} disabled={showKeepGoingPopup || showPopup}/>
+                    <UnderBoardBttn text="SAVE RESULT" onClick={saveData} disabled={showKeepGoingPopup || showPopup}/>
                     {transitions((styles, item) =>
                             item && (
                                 <animated.div style={styles} className="popup">
