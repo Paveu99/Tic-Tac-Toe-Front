@@ -45,6 +45,7 @@ export const Board = (props: Props) => {
     const [gameStarted, setGameStarted] = useState<boolean>(false);
     const [showPopup, setShowPopup] = useState(false);
     const [showKeepGoingPopup, setShowKeepGoingPopup] = useState(false);
+    const [nextOrReset, setNextOrReset] = useState<string>('RESET ROUND');
 
 
     function checkWinner(board: number[]) {
@@ -66,6 +67,7 @@ export const Board = (props: Props) => {
                 setYPosition(combo.coordinateY);
                 setAngle(combo.angle);
                 setStartStopwatch(false);
+                setNextOrReset('NEXT ROUND');
                 return true;
             }
         }
@@ -230,6 +232,7 @@ export const Board = (props: Props) => {
 
 
     const handleReset = () => {
+        setNextOrReset('RESET ROUND');
         setCurrentImg(initialImgState);
         setClickedIndexes([]);
         setClickedIndexesForX([]);
@@ -273,12 +276,12 @@ export const Board = (props: Props) => {
         if (clickedIndexes.length === 9 && !winner) {
             setStartStopwatch(false);
             setWinner('DRAW');
+            setNextOrReset('NEXT ROUND');
             setGameStarted(true);
         }
 
         if (winner) {
-            setOpenModal(true)
-            console.log(winner)
+            setOpenModal(true);
         }
     }, [clickedIndexes.length, currentImg, result, winner, gameStarted]);
 
