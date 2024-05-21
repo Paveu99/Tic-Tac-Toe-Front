@@ -1,0 +1,47 @@
+.underboard-button {
+  display: flex;
+  flex-direction: row;
+  color: black;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  padding: 10px 10px 10px 10px;
+  border: none;
+  border-radius: 10px;
+  max-height: 30px;
+  transition: transform 0.2s ease;
+  &:hover {
+    background-color: black;
+    cursor: pointer;
+    color: white;
+  }
+  &:active {
+    background-color: black;
+    cursor: pointer;
+    color: white;
+    transform: scale(1.1);
+  }
+  &:disabled {
+    &:hover {
+      background-color: #a19999;
+      cursor: auto;
+      color: white;
+    }
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .underboard-button {
+    &:hover {
+      background-color: white;
+      cursor: pointer;
+      color: black;
+    }
+    &:active {
+      background-color: black;
+      cursor: pointer;
+      color: white;
+      transform: scale(1.1);
+    }
+  }
+}
