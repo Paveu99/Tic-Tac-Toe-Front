@@ -45,6 +45,7 @@ export const Board = (props: Props) => {
     const [gameStarted, setGameStarted] = useState<boolean>(false);
     const [showPopup, setShowPopup] = useState(false);
     const [showKeepGoingPopup, setShowKeepGoingPopup] = useState(false);
+    const [newGamePopup, setNewGamePopup] = useState<boolean>(false);
     const [nextOrReset, setNextOrReset] = useState<string>('RESET ROUND');
 
 
@@ -184,6 +185,12 @@ export const Board = (props: Props) => {
         }
     }
 
+    const newGame = (e: FormEvent) => {
+        e.preventDefault();
+
+        setNewGamePopup(true);
+    }
+
     const transitions = useTransition(showPopup, {
         from: { opacity: 0, transform: 'translate(-50%, -50%) scale(0.5)' },
         enter: { opacity: 1, transform: 'translate(-50%, -50%) scale(1)' },
@@ -192,6 +199,13 @@ export const Board = (props: Props) => {
     });
 
     const transitionsB = useTransition(showKeepGoingPopup, {
+        from: { opacity: 0, transform: 'translate(-50%, -50%) scale(0.5)' },
+        enter: { opacity: 1, transform: 'translate(-50%, -50%) scale(1)' },
+        leave: { opacity: 0, transform: 'translate(-50%, -50%) scale(0.5)' },
+        config: { duration: 200 },
+    });
+
+    const transitionsC = useTransition(newGamePopup, {
         from: { opacity: 0, transform: 'translate(-50%, -50%) scale(0.5)' },
         enter: { opacity: 1, transform: 'translate(-50%, -50%) scale(1)' },
         leave: { opacity: 0, transform: 'translate(-50%, -50%) scale(0.5)' },
@@ -228,6 +242,10 @@ export const Board = (props: Props) => {
 
     const closeKeepGoing = () => {
         setShowKeepGoingPopup(false);
+    }
+
+    const closeNewGamePopup = () => {
+        setNewGamePopup(false);
     }
 
 
@@ -331,15 +349,15 @@ export const Board = (props: Props) => {
                         <CrossingLine angle={angle} xPosition={xPosition} yPosition={yPosition}/>}
                 </div>
                 <div className="board-buttons">
-                    <UnderBoardBttn text={nextOrReset} onClick={handleReset} disabled={showKeepGoingPopup || showPopup}/>
-                    <UnderBoardBttn text="NEW GAME" onClick={handleGameReset} disabled={showKeepGoingPopup || showPopup}/>
-                    <UnderBoardBttn text="SAVE RESULT" onClick={saveData} disabled={showKeepGoingPopup || showPopup}/>
+                    <UnderBoardBttn text={nextOrReset} onClick={handleReset} disabled={showKeepGoingPopup || showPopup || newGamePopup}/>
+                    <UnderBoardBttn text="NEW GAME" onClick={newGame} disabled={showKeepGoingPopup || showPopup || newGamePopup}/>
+                    <UnderBoardBttn text="SAVE RESULT" onClick={saveData} disabled={showKeepGoingPopup || showPopup || newGamePopup}/>
                     {transitions((styles, item) =>
                             item && (
                                 <animated.div style={styles} className="popup">
                                     <span className="popup-content">Are you sure?</span>
                                     <br/>
-                                    <span className="popup-content__description">Once saved, you can no longer come back to this game</span>
+                                    <span className="popup-content__description">Once saved, you can no longer come back to this game!</span>
                                     <div style={{display: "flex", justifyContent: "center", marginTop: "10px", gap: "15px", marginBottom: "10px"}}>
                                         <UnderBoardBttn text="Yes" onClick={closeSave}/>
                                         <UnderBoardBttn text="No" onClick={closeOnly}/>
@@ -355,6 +373,19 @@ export const Board = (props: Props) => {
                                     <span className="popup-content__description">No result was recorded, finish at least one game to save the game</span>
                                     <div style={{display: "flex", justifyContent: "center", marginTop: "10px", gap: "15px", marginBottom: "10px"}}>
                                         <UnderBoardBttn text="Ok" onClick={closeKeepGoing}/>
+                                    </div>
+                                </animated.div>
+                            )
+                    )}
+                    {transitionsC((styles, item) =>
+                            item && (
+                                <animated.div style={styles} className="popup">
+                                    <span className="popup-content">Are you sure?</span>
+                                    <br/>
+                                    <span className="popup-content__description">New game means, you can no longer come back to this game and unsaved result will be lost!</span>
+                                    <div style={{display: "flex", justifyContent: "center", marginTop: "10px", gap: "15px", marginBottom: "10px"}}>
+                                        <UnderBoardBttn text="Yes" onClick={handleGameReset}/>
+                                        <UnderBoardBttn text="No" onClick={closeNewGamePopup}/>
                                     </div>
                                 </animated.div>
                             )
