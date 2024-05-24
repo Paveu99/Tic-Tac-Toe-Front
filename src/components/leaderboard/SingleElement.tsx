@@ -6,7 +6,7 @@ interface Props {
 
 export const SingleElement = ({record}: Props) => {
 
-    return <div>
-        {record.winner}
-    </div>
+    return <li>
+        {record.winner}, {record.player1} - result: {record.player1Result}, {record.player2} - result: {record.player2Result}, {record.date}
+    </li>
 }
