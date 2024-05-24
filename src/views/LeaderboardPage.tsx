@@ -3,7 +3,6 @@ import {useEffect, useMemo} from "react";
 import {Table} from "../components/leaderboard/Table.tsx";
 
 export const LeaderboardPage = () => {
-    return <h1>HEJ</h1>
 
     const {allRecords, fetchRecords} = useRecordContext();
 
@@ -14,5 +13,6 @@ export const LeaderboardPage = () => {
     const memoizedData = useMemo(() => allRecords, [allRecords]);
     
     return <div>
+        <Table records={memoizedData}/>
     </div>
 }
