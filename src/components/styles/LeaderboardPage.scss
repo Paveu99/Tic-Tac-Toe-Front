@@ -1,0 +1,31 @@
+.single-record {
+  display: flex;
+  flex-direction: row;
+  border: 1px solid #ffffff;
+  padding: 10px;
+  border-radius: 20px;
+  margin-bottom: 5px;
+  &__left {
+    //border: 1px solid #ffffff;
+    //border-radius: 20px;
+    padding-right: 10px;
+  }
+}
+
+.table {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  max-width: 650px;
+  min-width: 300px;
+  border: 1px solid #ffffff;
+  padding: 20px;
+  border-radius: 20px;
+}
+
+.leaderboard_page_view {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

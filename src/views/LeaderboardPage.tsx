@@ -1,6 +1,7 @@
 import { useEffect, useMemo } from "react";
 import { Table } from "../components/leaderboard/Table";
 import { useRecordContext } from "../components/context/useRecordContext";
+import "../components/styles/LeaderboardPage.scss";
 
 export const LeaderboardPage = () => {
     const { allRecords, loading, error, fetchRecords } = useRecordContext();
@@ -20,8 +21,11 @@ export const LeaderboardPage = () => {
     }
 
     return (
-        <div className="page_view">
-            <Table records={memoizedData} />
+        <div>
+            <h1 style={{textAlign: "center"}}>All the results</h1>
+            <div className="leaderboard_page_view" style={{flexDirection: "column"}}>
+                <Table records={memoizedData}/>
+            </div>
         </div>
     );
 };
