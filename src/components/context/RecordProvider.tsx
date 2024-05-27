@@ -23,7 +23,7 @@ export const RecordProvider: React.FC<RecordProviderProps> = ({ children }) => {
         setLoading(true);
         setError(null);
         try {
-            const response = await fetch('http://localhost:3001/match');
+            const response = await fetch('http://192.168.68.107:3001/match');
             const data = await response.json();
             setAllRecords(data.sortedData);
         } catch (error) {
