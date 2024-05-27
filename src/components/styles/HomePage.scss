@@ -18,6 +18,7 @@
 
 .title-of-app {
   margin-top: 10px;
+  margin-bottom: 5px;
   font-size: 60px;
   color: var(--primary-color);
   transform: translateY(-600px);
@@ -44,7 +45,7 @@
   justify-content: center;
   align-items: center;
   width: 90vw;
-  font-size: 22px;
+  font-size: 20px;
   color: var(--primary-color);
   transform: translateY(-600px);
   animation: 1.2s slideIn ease-in-out forwards 1s;
