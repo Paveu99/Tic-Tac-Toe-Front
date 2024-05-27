@@ -134,6 +134,28 @@
   }
 }
 
+.players {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 13fr 1fr 13fr;
+  grid-gap: 10px;
+  margin-bottom: 10px;
+}
+
+.result {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 13fr 1fr 13fr;
+  grid-gap: 10px;
+  font-size: 3rem;
+}
+
+.winner {
+  margin-bottom: 10px;
+  font-size: 3rem;
+  color: green;
+}
+
 @media screen and (max-width: 1200px) {
   .winner-div {
     font-size: 32px;

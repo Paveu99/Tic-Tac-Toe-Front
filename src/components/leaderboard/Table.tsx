@@ -11,7 +11,7 @@ interface Props {
 
 export const Table = ({ records }: Props) => {
     const [currentPage, setCurrentPage] = useState(0);
-    const itemsPerPage = 15;
+    const itemsPerPage = 10;
 
     const handlePageClick = (data: { selected: number }) => {
         setCurrentPage(data.selected);
@@ -25,7 +25,7 @@ export const Table = ({ records }: Props) => {
         <div className="table">
             <div className="records">
                 {currentRecords.map((el,index) => (
-                    <SingleElement index={15*(currentPage)+(index+1)} record={el} key={el.id} />
+                    <SingleElement index={itemsPerPage*(currentPage)+(index+1)} record={el} key={el.id} />
                 ))}
             </div>
             <ReactPaginate

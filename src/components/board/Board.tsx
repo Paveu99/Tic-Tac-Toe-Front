@@ -217,7 +217,7 @@ export const Board = (props: Props) => {
     };
 
     const closeSave = async () => {
-        const res = await fetch('http://localhost:3001/match', {
+        const res = await fetch('http://192.168.68.107:3001/match', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
