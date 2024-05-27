@@ -6,6 +6,7 @@ import {Route, Routes} from "react-router-dom";
 import { HomePage } from './views/HomePage.tsx';
 import {GamePage} from "./views/GamePage.tsx";
 import {LeaderboardPage} from "./views/LeaderboardPage.tsx";
+import {RecordProvider} from "./components/context/RecordProvider.tsx";
 function App() {
 
     const [isNavbarHidden, setIsNavbarHidden] = useState<boolean>(true);
@@ -16,19 +17,21 @@ function App() {
 
   return (
       <div className="App">
-          <button className="test-button" onClick={toggleNavbar}>
-              <img src={el} alt="" className="icon-inside"/>
-          </button>
-          <div className={`navbar ${isNavbarHidden ? 'hidden' : ''}`}>
-              <Header/>
-          </div>
-          <div className={`content ${!isNavbarHidden ? 'hidden' : ''}`} onClick={() => setIsNavbarHidden(true)}>
-              <Routes>
-                  <Route path="/" element={<HomePage/>}/>
-                  <Route path="/game" element={<GamePage/>}/>
-                  <Route path="/details" element={<LeaderboardPage/>}/>
-              </Routes>
-          </div>
+          <RecordProvider>
+              <button className="test-button" onClick={toggleNavbar}>
+                  <img src={el} alt="" className="icon-inside"/>
+              </button>
+              <div className={`navbar ${isNavbarHidden ? 'hidden' : ''}`}>
+                  <Header/>
+              </div>
+              <div className={`content ${!isNavbarHidden ? 'hidden' : ''}`} onClick={() => setIsNavbarHidden(true)}>
+                  <Routes>
+                      <Route path="/" element={<HomePage/>}/>
+                      <Route path="/game" element={<GamePage/>}/>
+                      <Route path="/details" element={<LeaderboardPage/>}/>
+                  </Routes>
+              </div>
+          </RecordProvider>
       </div>
   )
 }
