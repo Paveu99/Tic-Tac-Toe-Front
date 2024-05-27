@@ -55,6 +55,9 @@ export const GameStartModal = (props: Props) => {
     }
 
     const handleChange = (key: string, value: any) => {
+        if (value.length > 10) {
+            value = value.substring(0, 10);
+        }
 
         setPlayers(players => ({
             ...players,
@@ -62,11 +65,11 @@ export const GameStartModal = (props: Props) => {
         }));
 
         if (key === 'player1') {
-            setCorrectPLayer1Name(value.length > 0);
+            setCorrectPLayer1Name(value.trim().length > 0);
             setP1NumOfChar(value.trim().length);
         }
         if (key === 'player2') {
-            setCorrectPLayer2Name(value.length > 0);
+            setCorrectPLayer2Name(value.trim().length > 0);
             setP2NumOfChar(value.trim().length);
         }
     };
@@ -121,6 +124,20 @@ export const GameStartModal = (props: Props) => {
             duration: 500
         }
     });
+
+    useEffect(() => {
+        const isPlayer1Valid = players.player1.trim().length > 0 && players.player1.trim().length <= 10;
+        const isPlayer2Valid = players.player2.trim().length > 0 && players.player2.trim().length <= 10;
+
+        setCorrectPLayer1Name(isPlayer1Valid);
+        setCorrectPLayer2Name(isPlayer2Valid);
+
+        if (isPlayer1Valid && isPlayer2Valid && players.player1.trim() !== players.player2.trim()) {
+            setDataCorrect(true);
+        } else {
+            setDataCorrect(false);
+        }
+    }, [players]);
 
     useEffect(() => {
         if (players.player1.trim() === players.player2.trim()) {
