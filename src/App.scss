@@ -1,0 +1,62 @@
+.App {
+  display: flex;
+}
+
+.content {
+  flex-grow: 1;
+  overflow-y: auto;
+  color: white;
+  z-index: 1;
+  filter: blur(0);
+  height: 100vh;
+}
+
+.content.hidden {
+  flex-grow: 1;
+  overflow-y: auto;
+  color: white;
+  z-index: 1;
+  filter: blur(5px);
+}
+
+.navbar {
+  background-color: #333;
+  width: 270px;
+  color: white;
+  height: 100vh;
+  transition: 0.5s ease-in-out;
+  left: 0;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  top: 0;
+  z-index: 2;
+}
+
+.navbar.hidden {
+  left: -270px;
+}
+
+.test-button {
+  margin-top: 5px;
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 100;
+  background-color: transparent;
+  border: none;
+  width: 45px;
+}
+
+.test-button:hover {
+  cursor: pointer;
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 1000;
+}
+
+.icon-inside {
+  width: 70%;
+}

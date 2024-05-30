@@ -1,34 +1,38 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-
+import './App.scss'
+import {Header} from "./components/header/Header.tsx";
+import el from '../src/components/styles/images/Menu.png';
+import {Route, Routes} from "react-router-dom";
+import { HomePage } from './views/HomePage.tsx';
+import {GamePage} from "./views/GamePage.tsx";
+import {LeaderboardPage} from "./views/LeaderboardPage.tsx";
+import {RecordProvider} from "./components/context/RecordProvider.tsx";
 function App() {
-  const [count, setCount] = useState(0);
+
+    const [isNavbarHidden, setIsNavbarHidden] = useState<boolean>(true);
+
+    const toggleNavbar = () => {
+        setIsNavbarHidden(!isNavbarHidden);
+    }
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className="App">
+          <RecordProvider>
+              <button className="test-button" onClick={toggleNavbar}>
+                  <img src={el} alt="" className="icon-inside"/>
+              </button>
+              <div className={`navbar ${isNavbarHidden ? 'hidden' : ''}`}>
+                  <Header/>
+              </div>
+              <div className={`content ${!isNavbarHidden ? 'hidden' : ''}`} onClick={() => setIsNavbarHidden(true)}>
+                  <Routes>
+                      <Route path="/" element={<HomePage/>}/>
+                      <Route path="/game" element={<GamePage/>}/>
+                      <Route path="/details" element={<LeaderboardPage/>}/>
+                  </Routes>
+              </div>
+          </RecordProvider>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
   )
 }
 

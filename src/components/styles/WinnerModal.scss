@@ -1,0 +1,163 @@
+.react-modal-overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+}
+
+.react-winner-modal-wrapper {
+  min-width: 300px;
+  width: 40vh;
+  max-width: 500px;
+}
+
+.react-winner-modal-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 15vh;
+  min-height: 250px;
+  text-align: left;
+  position: relative;
+  background-color: #171717;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  background-clip: padding-box;
+  border-radius: 0.3rem;
+  padding: 1rem;
+}
+
+.add-form-header {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  margin-top: 5px;
+  height: 30px;
+}
+
+.game-results {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+}
+
+.winner-div {
+  font-size: 32px;
+}
+
+.close {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  width: 32px;
+  height: 32px;
+  opacity: 0.5;
+}
+.close:hover {
+  opacity: 1;
+}
+.close:before, .close:after {
+  position: absolute;
+  left: 15px;
+  content: ' ';
+  height: 33px;
+  width: 2px;
+  background-color: #ffffff;
+}
+.close:before {
+  transform: rotate(45deg);
+}
+.close:after {
+  transform: rotate(-45deg);
+}
+
+.label {
+  display: flex;
+  width: 300px;
+  align-items: center;
+  margin: 20px 0 5px 0;
+}
+
+.desc-icon {
+  height: 1.3rem;
+  margin-right: 5px;
+}
+
+.input:hover {
+  outline: none;
+  background-color: #777777;
+  caret-color: transparent;
+}
+
+.input:focus {
+  outline: none;
+  background-color: #777777;
+  caret-color: transparent;
+}
+
+.check {
+  display: flex;
+  align-items: center;
+  &__icon {
+    height: 1.3rem;
+    margin-top: 3px;
+    margin-left: 10px;
+  }
+}
+
+.start-form {
+  &__name {
+    padding-left: 10px;
+    width: 240px;
+    height: 30px;
+    font-size: 15px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: none;
+    background-color: #3a3a3a;
+    color: white;
+  }
+  &__name::placeholder {
+    color: white;
+  }
+  &__name:focus::placeholder {
+    color: transparent;
+  }
+}
+
+.players {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 13fr 1fr 13fr;
+  grid-gap: 10px;
+  margin-bottom: 10px;
+}
+
+.result {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 13fr 1fr 13fr;
+  grid-gap: 10px;
+  font-size: 3rem;
+}
+
+.winner {
+  margin-bottom: 10px;
+  font-size: 3rem;
+  color: green;
+}
+
+@media screen and (max-width: 1200px) {
+  .winner-div {
+    font-size: 32px;
+  }
+}

@@ -1,0 +1,119 @@
+.board {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.player-x {
+  margin-right: 5vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  &__name {
+    font-size: 1.5em;
+  }
+}
+
+.player-o {
+  margin-left: 5vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  &__name {
+    font-size: 1.5em;
+  }
+}
+
+.current-result {
+  margin-top: 10px;
+  font-size: 1.5em;
+}
+
+.background {
+  height: 70vh;
+  width: 70vh;
+  background-color: white;
+  display: grid;
+  grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+  grid-gap: 1.5vh;
+  position: relative;
+  margin-top: 5vh;
+}
+
+.single_element {
+  background-color: rgba(138, 22, 22, 1);
+}
+
+.disabled {
+  pointer-events: none;
+}
+
+.board-buttons {
+  display: flex;
+  padding-top: 10px;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+@media screen and (max-width: 1200px) {
+  .board {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+            "game game"
+            "player-x player-o"
+  }
+  .game{
+    grid-area: game;
+  }
+  .player-x{
+    grid-area: player-x;
+    &__name {
+      font-size: 1rem;
+    }
+  }
+  .player-o{
+    grid-area: player-o;
+    &__name {
+      font-size: 1rem;
+    }
+  }
+  .background {
+    height: 80vw;
+    width: 80vw;
+    background-color: white;
+    display: grid;
+    grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+    grid-gap: 1vh;
+    position: relative;
+  }
+}
+
+.popup {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  width: 250px;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  color: red;
+  transform: translate(-50%, -50%);
+  background-color: #0d1010;
+  padding: 20px;
+  border: 2px solid #000000;
+  border-radius: 5px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.popup-content {
+  font-size: 24px;
+  &__description {
+    color: white;
+    font-size: 18px;
+    text-align: justify;
+  }
+}
